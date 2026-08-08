@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>RM İDMAN KLUBU</title>
+  <meta name="description" content="RM İdman Klubu – Bakının ən yaxşı idman zalı. Boks, kikboksinq, fitnes məşqləri." />
+  <meta name="theme-color" content="#0A0A0A" />
+  <meta name="robots" content="index, follow" />
+  <meta name="keywords" content="RM idman klubu, boks, kikboksinq, fitnes, trenajor, Bakı idman zalı" />
+  <meta property="og:title" content="RM İDMAN KLUBU" />
+  <meta property="og:description" content="RM İdman Klubu – Bakının ən yaxşı idman zalı. Boks, kikboksinq, fitnes məşqləri." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/logo.png" />
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <!-- Performance: preconnect & dns-prefetch -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+  <link rel="dns-prefetch" href="https://wa.me" />
+  <link rel="preload" href="images/logo.png" as="image" fetchpriority="high" />
+  <link rel="preload" href="css/style.css" as="style" />
+  <link rel="preload" href="js/app.js" as="script" />
+  <!-- Fonts: only needed weights, display=swap for fast rendering -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome: async load -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" /></noscript>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Critical inline CSS for above-the-fold content -->
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Open Sans',sans-serif;background:#0A0A0A;color:#fff;overflow-x:hidden}
+    #main-header{position:fixed;top:0;left:0;right:0;z-index:1000;height:70px;background:rgba(10,10,10,0.93);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+    .page{display:none;min-height:100vh;padding-top:70px}
+    .page.active{display:block}
+    .hero{position:relative;min-height:calc(100vh - 70px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#111}
+    .hero-logo{width:170px;height:170px;border-radius:50%;margin:0 auto 20px;border:4px solid rgba(150,200,10,0.6)}
+  </style>
+</head>
+<body>
+
+<!-- ============================
+     NAVIGATION
+============================= -->
+<header id="main-header">
+  <nav class="navbar">
+    <div class="nav-logo" onclick="showPage('home')">
+      <img src="images/logo.png" alt="RM İdman Klubu Logo" />
+      <span class="nav-brand">RM İDMAN KLUBU</span>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menyu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#" class="nav-link active" data-page="home" onclick="showPage('home');return false;">Ana Səhifə</a></li>
+      <li><a href="#" class="nav-link" data-page="martial-arts" onclick="showPage('martial-arts');return false;">Döyüş Sənətləri</a></li>
+      <li><a href="#" class="nav-link" data-page="fitness" onclick="showPage('fitness');return false;">Trenajor</a></li>
+      <li><a href="#" class="nav-link" data-page="gallery" onclick="showPage('gallery');return false;">Qalerya</a></li>
+      <li><a href="#" class="nav-link" data-page="champions" onclick="showPage('champions');return false;">Çempionlar</a></li>
+      <li><a href="#" class="nav-link" data-page="athletes" onclick="showPage('athletes');return false;">İdmançılar</a></li>
+
+      <li><a href="#" class="nav-link" data-page="campaigns" onclick="showPage('campaigns');return false;">Kampaniyalar</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ============================
+     PAGE: HOME
+============================= -->
+<main id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img src="images/logo.png" alt="RM Logo" class="hero-logo" />
+      <h1 class="hero-title animate-fade-up">
+        <span class="hero-rm">RM</span>
+        <span class="hero-idman">İDMAN</span>
+        <span class="hero-klubu">KLUBU</span>
+      </h1>
+      <p class="hero-subtitle animate-fade-up-delay">Güclü ol! Sağlam qal! Çempion ol! </p>
+      <div class="hero-btns animate-fade-up-delay2">
+        <button class="btn btn-gold" onclick="showPage('fitness')">Trenajor</button>
+        <button class="btn btn-outline" onclick="showPage('martial-arts')">Döyüş Sənətləri</button>
+        <a class="btn btn-whatsapp" href="https://wa.me/994555056722" target="_blank" rel="noopener">Əlaqə Yarat</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Haqqında</span>
+        <h2 class="section-title">Burada Yalnız Bədən Deyil, <span class="about-rm">QALİB</span> <span class="about-idman">XARAKTER</span> <span class="about-klubu">FORMALAŞIR</span></h2>
+        <div class="title-line"></div>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="about-serif-text">RM İdman Klubu peşəkar idmançılar və sağlam həyat tərzini seçən hər kəs üçün yaradılmış müasir idman mərkəzidir. Uşaqlardan böyüklərə qədər bütün üzvlərimizə təhlükəsiz məşq mühiti, peşəkar məşqçi heyəti və müasir avadanlıqlar təqdim edirik.</p>
+          <p class="about-serif-text">İstər yarışlara hazırlaşın, istər çəki azaldın, istərsə də güclü və sağlam bədən qurun — məqsədinizə uyğun planla yanınızdayıq.</p>
+          <ul class="about-features">
+            <li><i class="fas fa-check-circle"></i> Peşəkar məşqçilər</li>
+            <li><i class="fas fa-check-circle"></i> Müasir avadanlıqlar</li>
+            <li><i class="fas fa-check-circle"></i> Bütün yaş qrupları</li>
+            <li><i class="fas fa-check-circle"></i> Fərdi proqramlar</li>
+          </ul>
+        </div>
+        <div class="about-image">
+          <div class="about-img-wrap">
+            <img src="images/coach.jpg" alt="RM İdman Klubu Məşqçi" loading="lazy" />
+            <div class="about-badge">
+              <i class="fas fa-trophy"></i>
+              <span>Çempion Yetişdiririk</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOME CAMPAIGNS (max 3) -->
+  <section class="section home-campaigns-section" id="home-campaigns">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Kampaniyalar</span>
+        <h2 class="section-title">Xüsusi <span>Təkliflər</span></h2>
+        <div class="title-line"></div>
+      </div>
+      <div class="campaigns-grid home-campaigns-grid">
+
+        <div class="campaign-card" onclick="openCampaignPage('starter')">
+          <div class="campaign-badge-top">Yeni</div>
+          <div class="campaign-icon"><i class="fas fa-star"></i></div>
+          <h3>Başlanğıc Paketi</h3>
+          <p class="campaign-desc">Yeni başlayanlar üçün xüsusi hazırlanmış paket. Günlük, həftəlik və aylıq seçimlərlə zala qoşulun!</p>
+          <div class="campaign-details-preview">
+            <span><i class="fas fa-check"></i> Günlük – 3 AZN</span>
+            <span><i class="fas fa-check"></i> 12 gediş – 30 AZN</span>
+            <span><i class="fas fa-check"></i> Limitsiz – 40 AZN</span>
+          </div>
+          <button class="btn btn-gold btn-full">Ətraflı Bax <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="campaign-card featured-campaign" onclick="openCampaignPage('family')">
+          <div class="campaign-badge-top popular">Populyar</div>
+          <div class="campaign-icon"><i class="fas fa-users"></i></div>
+          <h3>Ailə Paketi</h3>
+          <p class="campaign-desc">Ailənizlə birgə məşq edin, daha çox qazanın! 2 və daha çox şəxs üçün xüsusi endirim.</p>
+          <div class="campaign-details-preview">
+            <span><i class="fas fa-check"></i> 2+ şəxs endirim</span>
+            <span><i class="fas fa-check"></i> Bütün növlər daxil</span>
+            <span><i class="fas fa-check"></i> Fərdi məşq planı</span>
+          </div>
+          <button class="btn btn-gold btn-full">Ətraflı Bax <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="campaign-card" onclick="openCampaignPage('student')">
+          <div class="campaign-badge-top">Tələbə</div>
+          <div class="campaign-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h3>Tələbə Paketi</h3>
+          <p class="campaign-desc">Tələbə bileti ilə xüsusi endirimli qiymətlə keyfiyyətli məşq imkanı əldə edin.</p>
+          <div class="campaign-details-preview">
+            <span><i class="fas fa-check"></i> Tələbə endirimi</span>
+            <span><i class="fas fa-check"></i> Çevik cədvəl</span>
+            <span><i class="fas fa-check"></i> Bütün imkanlar</span>
+          </div>
+          <button class="btn btn-gold btn-full">Ətraflı Bax <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+      </div>
+      <div class="home-campaigns-more">
+        <button class="btn btn-outline" onclick="showPage('campaigns')">
+          <i class="fas fa-th-large"></i> Daha Ətraflı Bax
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOURS – COMPACT -->
+  <section class="section hours-section" id="hours">
+    <div class="container">
+      <div class="section-header" style="margin-bottom:20px">
+        <span class="section-tag">Cədvəl</span>
+        <h2 class="section-title">Trenajor</h2>
+        <p style="color:var(--gray);font-size:0.85rem;margin-top:4px;letter-spacing:0.5px;">iş saatları</p>
+        <div class="title-line"></div>
+      </div>
+      <div class="hours-grid">
+        <div class="hours-card">
+          <div class="hours-icon"><i class="fas fa-calendar-week"></i></div>
+          <h3>B.ertəsi – Cümə</h3>
+          <p class="hours-time">10:00 – 23:00</p>
+          <span class="hours-badge open">Açıqdır</span>
+        </div>
+        <div class="hours-card">
+          <div class="hours-icon"><i class="fas fa-calendar-day"></i></div>
+          <h3>Şənbə</h3>
+          <p class="hours-time">10:00 – 23:00</p>
+          <span class="hours-badge open">Açıqdır</span>
+        </div>
+        <div class="hours-card">
+          <div class="hours-icon"><i class="fas fa-calendar-day"></i></div>
+          <h3>Bazar</h3>
+          <p class="hours-time">12:00 – 18:00</p>
+          <span class="hours-badge open">Açıqdır</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Əlaqə</span>
+        <h2 class="section-title">Bizimlə <span>Əlaqə</span></h2>
+        <div class="title-line"></div>
+      </div>
+      <div class="contact-grid">
+        <a class="contact-card" href="https://wa.me/994555056722" target="_blank" rel="noopener" aria-label="WhatsApp ilə əlaqə">
+          <div class="contact-icon whatsapp-icon">
+            <i class="fab fa-whatsapp"></i>
+          </div>
+          <div class="contact-info">
+            <span class="contact-label">WhatsApp / Zəng</span>
+            <span class="contact-value">+994 55 505 67 22</span>
+          </div>
+          <i class="fas fa-arrow-right contact-arrow"></i>
+        </a>
+        <a class="contact-card" href="https://www.instagram.com/rm_sport_club/" target="_blank" rel="noopener" aria-label="Instagram hesabına bax">
+          <div class="contact-icon instagram-icon">
+            <i class="fab fa-instagram"></i>
+          </div>
+          <div class="contact-info">
+            <span class="contact-label">Instagram</span>
+            <span class="contact-value">@rm_sport_club</span>
+          </div>
+          <i class="fas fa-arrow-right contact-arrow"></i>
+        </a>
+        <a class="contact-card" href="https://maps.app.goo.gl/916dTFDQKmXtCmyh6" target="_blank" rel="noopener" aria-label="Xəritədə göstər">
+          <div class="contact-icon map-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="contact-info">
+            <span class="contact-label">Ünvan / Xəritə</span>
+            <span class="contact-value">Google Maps ilə Tap</span>
+          </div>
+          <i class="fas fa-arrow-right contact-arrow"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================
+     PAGE: MARTIAL ARTS
+============================= -->
+<main id="page-martial-arts" class="page">
+  <section class="page-hero small-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1>Döyüş Sənətləri</h1>
+      <p>Peşəkar məşqçilərimizlə birgə zəfər qazanın</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <button class="back-btn" onclick="goBackPage('martial-arts')">
+        <i class="fas fa-arrow-left"></i> Geri
+      </button>
+      <div class="section-header">
+        <span class="section-tag">Döyüş Proqramları</span>
+        <h2 class="section-title">Döyüş <span>Sənətləri</span></h2>
+        <div class="title-line"></div>
+      </div>
+      <div class="training-grid">
+
+        <div class="training-card" onclick="openTrainingPage('kikboksinq')">
+          <div class="training-card-img">
+            <i class="fas fa-fist-raised training-icon"></i>
+          </div>
+          <div class="training-card-body">
+            <span class="training-tag">Döyüş sənəti</span>
+            <h3>Kikboksinq</h3>
+            <p>Boks və karatenin birləşməsindən yaranan dinamik döyüş sənəti. Müdafiə bacarıqları, güc və çeviklik üçün ideal məşq növü.</p>
+            <button class="btn btn-gold btn-sm">Ətraflı Bax <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================
+     PAGE: FITNESS
+============================= -->
+<main id="page-fitness" class="page">
+  <section class="page-hero small-hero fitness-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1>Trenajor</h1>
+      <p>Güclü bədən, sağlam həyat</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <button class="back-btn" onclick="goBackPage('fitness')">
+        <i class="fas fa-arrow-left"></i> Geri
+      </button>
+      <div class="section-header">
+        <span class="section-tag mint-tag">Fitnes Proqramları</span>
+        <h2 class="section-title">Trenajor <span class="mint-text">Bölməsi</span></h2>
+        <div class="title-line mint-line"></div>
+      </div>
+      <div class="training-grid">
+
+        <div class="training-card" onclick="openTrainingPage('trenajor-kisi')">
+          <div class="training-card-img mint-card-img">
+            <i class="fas fa-dumbbell training-icon mint-training-icon"></i>
+          </div>
+          <div class="training-card-body">
+            <span class="training-tag mint-training-tag">Fitnes</span>
+            <h3>Trenajor (Kişi)</h3>
+            <p>Kişilər üçün xüsusi hazırlanmış güc məşq proqramı. Əzələ kütləsi artırmaq, güclənmək və formada qalmaq üçün ideal.</p>
+            <button class="btn btn-mint btn-sm">Ətraflı Bax <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <div class="training-card" onclick="openTrainingPage('trenajor-qadin')">
+          <div class="training-card-img mint-card-img">
+            <i class="fas fa-heart training-icon mint-training-icon"></i>
+          </div>
+          <div class="training-card-body">
+            <span class="training-tag mint-training-tag">Fitnes</span>
+            <h3>Trenajor (Qadın)</h3>
+            <p>Qadınlar üçün nəzərdə tutulmuş xüsusi fitnes proqramı. Arıqlamaq, elastiklik qazanmaq və sağlam qalmaq üçün uyğundur.</p>
+            <button class="btn btn-mint btn-sm">Ətraflı Bax <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================
+     PAGE: TRAINING DETAIL
+============================= -->
+<main id="page-training-detail" class="page">
+  <section class="page-hero small-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1 id="training-detail-hero-title">Məşq Detalı</h1>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <button class="back-btn" onclick="goBackPage('training-detail')">
+        <i class="fas fa-arrow-left"></i> Geri
+      </button>
+      <div id="training-detail-content"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================
+     PAGE: GALLERY
+============================= -->
+<main id="page-gallery" class="page">
+  <section class="page-hero small-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1>Qalerya</h1>
+      <p>Uğurlarımız və anlarımızdan seçmələr</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <button class="back-btn" onclick="goBackPage('gallery')">
+        <i class="fas fa-arrow-left"></i> Geri
+      </button>
+      <div class="section-header">
+        <span class="section-tag">Fotolar</span>
+        <h2 class="section-title">Foto <span>Qalerya</span></h2>
+        <div class="title-line"></div>
+      </div>
+      <div class="gallery-grid" id="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox(0,'gallery')">
+          <img src="images/gym1.jpg" alt="RM İdman Klubu – Avadanlıqlar" loading="lazy" />
+          <div class="gallery-overlay">
+            <i class="fas fa-search-plus"></i>
+            <span>Avadanlıqlar</span>
+          </div>
+        </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(2,'gallery')">
+          <img src="images/gym3.jpg" alt="RM İdman Klubu – Trenajor Bölməsi" loading="lazy" />
+          <div class="gallery-overlay">
+            <i class="fas fa-search-plus"></i>
+            <span>Trenajor Bölməsi</span>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(3,'gallery')">
+          <img src="images/gym4.jpg" alt="RM İdman Klubu – Güc Avadanlıqları" loading="lazy" />
+          <div class="gallery-overlay">
+            <i class="fas fa-search-plus"></i>
+            <span>Güc Avadanlıqları</span>
+          </div>
+        </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================
+     PAGE: CHAMPIONS (Çempionlar)
+============================= -->
+<main id="page-champions" class="page">
+  <section class="page-hero small-hero champions-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1>Çempionlar</h1>
+      <p>Uğurlarımız, qürur mənbəyimiz</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <button class="back-btn" onclick="goBackPage('champions')">
+        <i class="fas fa-arrow-left"></i> Geri
+      </button>
+      <div class="section-header">
+        <span class="section-tag">Qürur Anları</span>
+        <h2 class="section-title">Bizim <span>Çempionlar</span></h2>
+        <div class="title-line"></div>
+      </div>
+
+      <div class="champions-grid">
+        <div class="champion-card">
+          <div class="champion-img-wrap">
+            <img src="images/yusif.jpg" alt="Şükürlü Yusif" loading="lazy" />
+          </div>
+          <div class="champion-info">
+            <h3>Şükürlü Yusif</h3>
+            <p class="champion-year">Doğum ili: 2012</p>
+            <ul class="champion-achievements">
+              <li><i class="fas fa-medal"></i> Respublika üçüncüsü (2 dəfə)</li>
+              <li><i class="fas fa-trophy"></i> Bakı Kuboku – 1-ci yer</li>
+              <li><i class="fas fa-crown"></i> Bakı Çempionu</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="champion-card">
+          <div class="champion-img-wrap">
+            <img src="images/abelfez.jpg" alt="Cavadov Əbəlfəz" loading="lazy" />
+          </div>
+          <div class="champion-info">
+            <h3>Cavadov Əbəlfəz</h3>
+            <p class="champion-year">Doğum ili: 2013</p>
+            <ul class="champion-achievements">
+              <li><i class="fas fa-crown"></i> Bakı Çempionu</li>
+              <li><i class="fas fa-medal"></i> Respublika üçüncüsü</li>
+              <li><i class="fas fa-trophy"></i> Respublika Çempionu</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<!-- ============================
+     PAGE: ATHLETES (İdmançılar)
+============================= -->
+<main id="page-athletes" class="page">
+  <section class="page-hero small-hero athletes-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1>İdmançılar</h1>
+      <p>RM İdman Klubunun iftixarı olan idmançılarımız</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <button class="back-btn" onclick="goBackPage('athletes')">
+        <i class="fas fa-arrow-left"></i> Geri
+      </button>
+      <div class="section-header">
+        <span class="section-tag">İdmançılarımız</span>
+        <h2 class="section-title">Bizim <span>İdmançılar</span></h2>
+        <div class="title-line"></div>
+      </div>
+
+      <div class="champions-grid">
+        <div class="champion-card">
+          <div class="champion-img-wrap">
+            <img src="images/yusif.jpg" alt="Şükürlü Yusif" loading="lazy" />
+          </div>
+          <div class="champion-info">
+            <h3>Şükürlü Yusif</h3>
+            <p class="champion-year">Doğum ili: 2012</p>
+            <ul class="champion-achievements">
+              <li><i class="fas fa-medal"></i> Respublika üçüncüsü (2 dəfə)</li>
+              <li><i class="fas fa-trophy"></i> Bakı Kuboku – 1-ci yer</li>
+              <li><i class="fas fa-crown"></i> Bakı Çempionu</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="champion-card">
+          <div class="champion-img-wrap">
+            <img src="images/abelfez.jpg" alt="Cavadov Əbəlfəz" loading="lazy" />
+          </div>
+          <div class="champion-info">
+            <h3>Cavadov Əbəlfəz</h3>
+            <p class="champion-year">Doğum ili: 2013</p>
+            <ul class="champion-achievements">
+              <li><i class="fas fa-crown"></i> Bakı Çempionu</li>
+              <li><i class="fas fa-medal"></i> Respublika üçüncüsü</li>
+              <li><i class="fas fa-trophy"></i> Respublika Çempionu</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+
+
+<!-- ============================
+     PAGE: CAMPAIGNS
+============================= -->
+<main id="page-campaigns" class="page">
+  <section class="page-hero small-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1>Kampaniyalar</h1>
+      <p>Xüsusi təkliflər və endirimli paketlər</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <button class="back-btn" onclick="goBackPage('campaigns')">
+        <i class="fas fa-arrow-left"></i> Geri
+      </button>
+      <div class="section-header">
+        <span class="section-tag">Təkliflər</span>
+        <h2 class="section-title">Xüsusi <span>Kampaniyalar</span></h2>
+        <div class="title-line"></div>
+      </div>
+      <div class="campaigns-grid">
+
+        <div class="campaign-card" onclick="openCampaignPage('starter')">
+          <div class="campaign-badge-top">Yeni</div>
+          <div class="campaign-icon"><i class="fas fa-star"></i></div>
+          <h3>Başlanğıc Paketi</h3>
+          <p class="campaign-desc">Yeni başlayanlar üçün xüsusi hazırlanmış paket. Günlük, həftəlik və aylıq seçimlərlə zala qoşulun!</p>
+          <div class="campaign-details-preview">
+            <span><i class="fas fa-check"></i> Günlük – 3 AZN</span>
+            <span><i class="fas fa-check"></i> 12 gediş – 30 AZN</span>
+            <span><i class="fas fa-check"></i> Limitsiz – 40 AZN</span>
+          </div>
+          <button class="btn btn-gold btn-full">Ətraflı Bax <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="campaign-card featured-campaign" onclick="openCampaignPage('family')">
+          <div class="campaign-badge-top popular">Populyar</div>
+          <div class="campaign-icon"><i class="fas fa-users"></i></div>
+          <h3>Ailə Paketi</h3>
+          <p class="campaign-desc">Ailənizlə birgə məşq edin, daha çox qazanın! 2 və daha çox şəxs üçün xüsusi endirim.</p>
+          <div class="campaign-details-preview">
+            <span><i class="fas fa-check"></i> 2+ şəxs endirim</span>
+            <span><i class="fas fa-check"></i> Bütün növlər daxil</span>
+            <span><i class="fas fa-check"></i> Fərdi məşq planı</span>
+          </div>
+          <button class="btn btn-gold btn-full">Ətraflı Bax <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="campaign-card" onclick="openCampaignPage('student')">
+          <div class="campaign-badge-top">Tələbə</div>
+          <div class="campaign-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h3>Tələbə Paketi</h3>
+          <p class="campaign-desc">Tələbə bileti ilə xüsusi endirimli qiymətlə keyfiyyətli məşq imkanı əldə edin.</p>
+          <div class="campaign-details-preview">
+            <span><i class="fas fa-check"></i> Tələbə endirimi</span>
+            <span><i class="fas fa-check"></i> Çevik cədvəl</span>
+            <span><i class="fas fa-check"></i> Bütün imkanlar</span>
+          </div>
+          <button class="btn btn-gold btn-full">Ətraflı Bax <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="campaign-card" onclick="openCampaignPage('annual')">
+          <div class="campaign-badge-top">Sərfəli</div>
+          <div class="campaign-icon"><i class="fas fa-calendar-alt"></i></div>
+          <h3>İllik Paket</h3>
+          <p class="campaign-desc">Bütün il boyunca məhdudiyyətsiz giriş. İllik ödəniş ilə ən sərfəli seçim. Qeydiyyat haqqı pulsuz!</p>
+          <div class="campaign-details-preview">
+            <span><i class="fas fa-check"></i> 12 aylıq abunə</span>
+            <span><i class="fas fa-check"></i> Qeydiyyat pulsuz</span>
+            <span><i class="fas fa-check"></i> Prioritet xidmət</span>
+          </div>
+          <button class="btn btn-gold btn-full">Ətraflı Bax <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================
+     PAGE: CAMPAIGN DETAIL
+============================= -->
+<main id="page-campaign-detail" class="page">
+  <section class="page-hero small-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1 id="campaign-detail-hero-title">Kampaniya Detalı</h1>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <button class="back-btn" id="campaign-back-btn" onclick="goBackPage('campaign-detail')">
+        <i class="fas fa-arrow-left"></i> Geri
+      </button>
+      <div id="campaign-detail-content"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================
+     LIGHTBOX
+============================= -->
+<div class="lightbox-overlay" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Bağla"><i class="fas fa-times"></i></button>
+  <button class="lightbox-nav lightbox-prev" onclick="lightboxNav(-1)" aria-label="Əvvəlki"><i class="fas fa-chevron-left"></i></button>
+  <img id="lightbox-img" src="" alt="" />
+  <button class="lightbox-nav lightbox-next" onclick="lightboxNav(1)" aria-label="Növbəti"><i class="fas fa-chevron-right"></i></button>
+  <div class="lightbox-counter" id="lightbox-counter"></div>
+</div>
+
+<script src="js/app.js" defer></script>
+</body>
+</html>
