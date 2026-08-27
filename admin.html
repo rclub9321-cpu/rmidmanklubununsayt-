@@ -7,7 +7,12 @@
   <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" type="image/png" href="images/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+  <link rel="dns-prefetch" href="https://yyrcsgqvkqyezopzohxb.supabase.co" />
+  <link rel="preconnect" href="https://yyrcsgqvkqyezopzohxb.supabase.co" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" /></noscript>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" /></noscript>
   <style>
@@ -417,36 +422,51 @@ CREATE POLICY "anon_read_users" ON vip_users
 <script>
 'use strict';
 
+/* ============================================================
+   SUPABASE CONFIG – service_role key ilə tam icazə
+   ============================================================ */
 var SUPABASE_URL = 'https://yyrcsgqvkqyezopzohxb.supabase.co';
 var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5cmNzcWd2a3F5ZXpvcHpvaHhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4NDM4NDUsImV4cCI6MjEwMzQxOTg0NX0.Jy1LFYWSeNWx6tEf1Oxw88_n1xvb76DxnVpwKvpkCZo';
 var SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5cmNzcWd2a3F5ZXpvcHpvaHhiIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4Nzg0Mzg0NSwiZXhwIjoyMTAzNDE5ODQ1fQ.KXszL2Oap9DbyBsKYJF9CtmanJMFJ2yCclJGjFA0yaA';
 
-/* Admin credentials */
+/* Admin panel giriş məlumatları */
 var ADMIN_USER = 'admin';
 var ADMIN_PASS = 'salam';
 
-/* ---- Fetch helpers ---- */
+/* ============================================================
+   SUPABASE FETCH HELPER
+   useService=true olduqda service_role key istifadə edilir
+   ============================================================ */
 function sbFetch(path, opts, useService) {
   var key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_ANON_KEY;
-  var headers = Object.assign({
+  var baseHeaders = {
     'apikey': key,
     'Authorization': 'Bearer ' + key,
-    'Content-Type': 'application/json'
-  }, opts && opts.headers || {});
-  return fetch(SUPABASE_URL + path, Object.assign({}, opts, { headers: headers }));
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  };
+  var extraHeaders = (opts && opts.headers) ? opts.headers : {};
+  var mergedHeaders = Object.assign({}, baseHeaders, extraHeaders);
+  var fetchOpts = Object.assign({}, opts || {});
+  fetchOpts.headers = mergedHeaders;
+  return fetch(SUPABASE_URL + path, fetchOpts);
 }
 
-/* ---- Toast ---- */
+/* ============================================================
+   TOAST BİLDİRİŞİ
+   ============================================================ */
 var toastTimer;
 function showToast(msg, type) {
   var t = document.getElementById('toast');
-  t.textContent = msg;
+  t.innerHTML = (type === 'success' ? '<i class="fas fa-check-circle"></i> ' : '<i class="fas fa-exclamation-circle"></i> ') + msg;
   t.className = 'toast ' + (type || 'success') + ' show';
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(function() { t.classList.remove('show'); }, 3000);
+  toastTimer = setTimeout(function() { t.classList.remove('show'); }, 3500);
 }
 
-/* ---- Admin Login ---- */
+/* ============================================================
+   ADMIN GİRİŞ
+   ============================================================ */
 function handleAdminLogin(e) {
   e.preventDefault();
   var u = document.getElementById('admin-username').value.trim();
@@ -454,15 +474,25 @@ function handleAdminLogin(e) {
   var errEl = document.getElementById('login-error');
   errEl.classList.remove('show');
 
-  if (u === ADMIN_USER && p === ADMIN_PASS) {
-    sessionStorage.setItem('rm_admin', '1');
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('admin-panel').classList.add('show');
-    loadAdminData();
-  } else {
-    document.getElementById('login-error-text').textContent = 'İstifadəçi adı və ya parol yanlışdır.';
-    errEl.classList.add('show');
-  }
+  var btn = document.getElementById('admin-login-btn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  /* Qısa gecikmə ilə giriş (UI feedback üçün) */
+  setTimeout(function() {
+    btn.classList.remove('loading');
+    btn.disabled = false;
+
+    if (u === ADMIN_USER && p === ADMIN_PASS) {
+      sessionStorage.setItem('rm_admin', '1');
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-panel').classList.add('show');
+      loadAdminData();
+    } else {
+      document.getElementById('login-error-text').textContent = 'İstifadəçi adı və ya parol yanlışdır.';
+      errEl.classList.add('show');
+    }
+  }, 400);
 }
 
 function adminLogout() {
@@ -473,36 +503,51 @@ function adminLogout() {
   document.getElementById('admin-password').value = '';
 }
 
-/* ---- Load Admin Data ---- */
+/* ============================================================
+   ADMIN DATA YÜKLƏMƏ
+   ============================================================ */
 function loadAdminData() {
   loadWelcomeMessage();
   loadUsers();
 }
 
-/* ---- Welcome Message ---- */
+/* ============================================================
+   VIP QARŞILAMA MESAJI
+   ============================================================ */
 function loadWelcomeMessage() {
-  sbFetch('/rest/v1/admin_settings?select=value&key=eq.welcome_message', {}, true)
+  document.getElementById('current-msg-display').textContent = 'Yüklənir...';
+
+  sbFetch('/rest/v1/admin_settings?select=value&key=eq.welcome_message', {
+    method: 'GET'
+  }, true)
     .then(function(r) {
-      if (r.status === 404 || r.status === 406) {
-        document.getElementById('db-setup-alert').style.display = 'block';
-        throw new Error('table_not_found');
+      if (!r.ok) {
+        if (r.status === 404 || r.status === 406 || r.status === 401) {
+          document.getElementById('db-setup-alert').style.display = 'block';
+          document.getElementById('current-msg-display').textContent = 'Cədvəl tapılmadı';
+          return null;
+        }
       }
       return r.json();
     })
     .then(function(data) {
-      if (!data || (data.code && data.message && data.message.indexOf('does not exist') !== -1)) {
+      if (!data) return;
+      /* Supabase xəta cavabını yoxla */
+      if (data && !Array.isArray(data) && data.code) {
         document.getElementById('db-setup-alert').style.display = 'block';
         document.getElementById('current-msg-display').textContent = 'Cədvəl tapılmadı';
         return;
       }
       var msg = 'Salam';
-      if (Array.isArray(data) && data.length > 0) msg = data[0].value;
+      if (Array.isArray(data) && data.length > 0) {
+        msg = data[0].value || 'Salam';
+      }
       document.getElementById('welcome-msg-input').value = msg;
       document.getElementById('current-msg-display').textContent = msg;
     })
     .catch(function(err) {
-      if (err && err.message === 'table_not_found') return;
-      document.getElementById('current-msg-display').textContent = 'Yükləmə xətası';
+      console.error('loadWelcomeMessage xətası:', err);
+      document.getElementById('current-msg-display').textContent = 'Bağlantı xətası';
     });
 }
 
@@ -511,138 +556,194 @@ function saveWelcomeMessage() {
   if (!msg) { showToast('Mesaj boş ola bilməz.', 'error'); return; }
 
   var btn = document.getElementById('save-msg-btn');
-  btn.classList.add('loading'); btn.disabled = true;
+  btn.classList.add('loading');
+  btn.disabled = true;
   document.getElementById('msg-success').classList.remove('show');
   document.getElementById('msg-error').classList.remove('show');
 
-  /* Upsert welcome_message */
+  /* UPSERT: əvvəlcə DELETE sonra INSERT etmək əvəzinə merge-duplicates istifadə edirik */
   sbFetch('/rest/v1/admin_settings', {
     method: 'POST',
     headers: {
-      'Prefer': 'resolution=merge-duplicates,return=representation'
+      'Prefer': 'resolution=merge-duplicates,return=minimal'
     },
-    body: JSON.stringify({ key: 'welcome_message', value: msg, updated_at: new Date().toISOString() })
+    body: JSON.stringify({
+      key: 'welcome_message',
+      value: msg,
+      updated_at: new Date().toISOString()
+    })
   }, true)
     .then(function(r) {
-      btn.classList.remove('loading'); btn.disabled = false;
-      if (r.ok || r.status === 200 || r.status === 201) {
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      if (r.ok || r.status === 200 || r.status === 201 || r.status === 204) {
         document.getElementById('msg-success').classList.add('show');
         document.getElementById('current-msg-display').textContent = msg;
         showToast('Mesaj uğurla yadda saxlanıldı!', 'success');
-        setTimeout(function() { document.getElementById('msg-success').classList.remove('show'); }, 3000);
+        setTimeout(function() {
+          document.getElementById('msg-success').classList.remove('show');
+        }, 3000);
       } else {
-        return r.json().then(function(e) {
-          throw new Error(e.message || 'Xəta');
+        return r.text().then(function(txt) {
+          var errMsg = 'Saxlama xətası (status: ' + r.status + ')';
+          try {
+            var parsed = JSON.parse(txt);
+            if (parsed.message) errMsg = parsed.message;
+          } catch(e) {}
+          throw new Error(errMsg);
         });
       }
     })
     .catch(function(err) {
-      btn.classList.remove('loading'); btn.disabled = false;
-      document.getElementById('msg-error-text').textContent = err.message || 'Xəta baş verdi.';
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      var errText = err.message || 'Xəta baş verdi.';
+      document.getElementById('msg-error-text').textContent = errText;
       document.getElementById('msg-error').classList.add('show');
-      showToast('Xəta: ' + (err.message || 'Naməlum xəta'), 'error');
+      showToast('Xəta: ' + errText, 'error');
+      console.error('saveWelcomeMessage xətası:', err);
     });
 }
 
-/* ---- Load Users ---- */
+/* ============================================================
+   VIP İSTİFADƏÇİLƏR – YÜKLƏ
+   ============================================================ */
 function loadUsers() {
-  document.getElementById('users-loading').style.display = 'block';
-  document.getElementById('users-table').style.display = 'none';
-  document.getElementById('empty-users').style.display = 'none';
+  var loadingEl = document.getElementById('users-loading');
+  var tableEl = document.getElementById('users-table');
+  var emptyEl = document.getElementById('empty-users');
 
-  sbFetch('/rest/v1/vip_users?select=id,username,password,created_at&order=created_at.desc', {}, true)
+  loadingEl.style.display = 'block';
+  tableEl.style.display = 'none';
+  emptyEl.style.display = 'none';
+
+  sbFetch('/rest/v1/vip_users?select=id,username,password,created_at&order=created_at.desc', {
+    method: 'GET'
+  }, true)
     .then(function(r) {
-      if (r.status === 404 || r.status === 406) {
-        /* Table doesn't exist */
-        document.getElementById('db-setup-alert').style.display = 'block';
-        document.getElementById('users-loading').style.display = 'none';
-        throw new Error('table_not_found');
+      if (!r.ok) {
+        if (r.status === 404 || r.status === 406 || r.status === 401) {
+          document.getElementById('db-setup-alert').style.display = 'block';
+          loadingEl.style.display = 'none';
+          return null;
+        }
       }
       return r.json();
     })
     .then(function(data) {
-      document.getElementById('users-loading').style.display = 'none';
-      if (data && data.code && (data.code === '42P01' || data.message && data.message.indexOf('does not exist') !== -1)) {
+      loadingEl.style.display = 'none';
+      if (!data) return;
+
+      /* Supabase xəta obyektini yoxla */
+      if (data && !Array.isArray(data) && data.code) {
         document.getElementById('db-setup-alert').style.display = 'block';
         return;
       }
-      renderUsers(data || []);
+
+      renderUsers(Array.isArray(data) ? data : []);
     })
     .catch(function(err) {
-      if (err && err.message === 'table_not_found') return;
-      document.getElementById('users-loading').style.display = 'none';
-      document.getElementById('empty-users').style.display = 'block';
-      document.getElementById('empty-users').innerHTML = '<i class="fas fa-exclamation-triangle"></i><br>İstifadəçiləri yükləmək mümkün olmadı. Supabase bağlantısını yoxlayın.';
+      loadingEl.style.display = 'none';
+      emptyEl.style.display = 'block';
+      emptyEl.innerHTML = '<i class="fas fa-exclamation-triangle"></i><br>Bağlantı xətası baş verdi. İnternet bağlantınızı və Supabase URL-ni yoxlayın.';
+      console.error('loadUsers xətası:', err);
     });
 }
 
+/* ============================================================
+   VIP İSTİFADƏÇİLƏR – RENDER
+   ============================================================ */
 function renderUsers(users) {
-  var count = document.getElementById('user-count');
-  count.textContent = users.length;
+  var countEl = document.getElementById('user-count');
+  var tableEl = document.getElementById('users-table');
+  var emptyEl = document.getElementById('empty-users');
+  var tbody   = document.getElementById('users-tbody');
+
+  countEl.textContent = users.length;
 
   if (users.length === 0) {
-    document.getElementById('empty-users').style.display = 'block';
-    document.getElementById('empty-users').innerHTML = '<i class="fas fa-user-slash"></i><br>Heç bir VIP istifadəçi tapılmadı.';
+    emptyEl.style.display = 'block';
+    emptyEl.innerHTML = '<i class="fas fa-user-slash"></i><br>Heç bir VIP istifadəçi tapılmadı. Aşağıdakı formdan əlavə edin.';
     return;
   }
 
-  document.getElementById('users-table').style.display = 'table';
-  var tbody = document.getElementById('users-tbody');
+  tableEl.style.display = 'table';
   tbody.innerHTML = '';
 
   users.forEach(function(u) {
-    var tr = document.createElement('tr');
-    var date = u.created_at ? new Date(u.created_at).toLocaleDateString('az-AZ') : '-';
+    var tr   = document.createElement('tr');
+    var date = u.created_at
+      ? new Date(u.created_at).toLocaleDateString('az-AZ', { day:'2-digit', month:'2-digit', year:'numeric' })
+      : '-';
+    var safePass = escHtml(String(u.password || ''));
+    var safeName = escHtml(String(u.username || ''));
 
     tr.innerHTML =
-      '<td><span class="user-name-cell">' + escHtml(u.username) + '</span></td>' +
-      '<td><span class="password-cell" title="Görmək üçün klikləyin" onclick="togglePass(this,\'' + escHtml(u.password) + '\')" data-plain="' + escHtml(u.password) + '" data-masked="••••••">••••••</span></td>' +
+      '<td><span class="user-name-cell">' + safeName + '</span></td>' +
+      '<td><span class="password-cell" title="Görmək üçün klikləyin" ' +
+        'onclick="togglePass(this)" data-plain="' + safePass + '" data-masked="••••••">••••••</span></td>' +
       '<td class="user-date-cell">' + date + '</td>' +
-      '<td><button class="btn-delete" onclick="deleteUser(' + u.id + ',this)"><i class="fas fa-trash-alt"></i> Sil</button></td>';
+      '<td><button class="btn-delete" onclick="deleteUser(' + Number(u.id) + ',this)">' +
+        '<i class="fas fa-trash-alt"></i> Sil</button></td>';
 
     tbody.appendChild(tr);
   });
 }
 
-function togglePass(el, plain) {
+function togglePass(el) {
   if (el.dataset.showing === '1') {
-    el.textContent = '••••••';
+    el.textContent = el.dataset.masked || '••••••';
     el.dataset.showing = '0';
   } else {
-    el.textContent = plain;
+    el.textContent = el.dataset.plain || '';
     el.dataset.showing = '1';
   }
 }
 
-/* ---- Delete User ---- */
+/* ============================================================
+   VIP İSTİFADƏÇİ SİL
+   ============================================================ */
 function deleteUser(id, btn) {
   if (!confirm('Bu istifadəçini silmək istədiyinizdən əminsiniz?')) return;
   btn.disabled = true;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
-  sbFetch('/rest/v1/vip_users?id=eq.' + id, { method: 'DELETE' }, true)
+  sbFetch('/rest/v1/vip_users?id=eq.' + id, {
+    method: 'DELETE',
+    headers: { 'Prefer': 'return=minimal' }
+  }, true)
     .then(function(r) {
-      if (r.ok || r.status === 204) {
-        showToast('İstifadəçi silindi!', 'success');
+      if (r.ok || r.status === 200 || r.status === 204) {
+        showToast('İstifadəçi uğurla silindi!', 'success');
         loadUsers();
       } else {
-        return r.json().then(function(e) { throw new Error(e.message); });
+        return r.text().then(function(txt) {
+          var errMsg = 'Silmə xətası (status: ' + r.status + ')';
+          try { var p = JSON.parse(txt); if (p.message) errMsg = p.message; } catch(e) {}
+          throw new Error(errMsg);
+        });
       }
     })
     .catch(function(err) {
       btn.disabled = false;
       btn.innerHTML = '<i class="fas fa-trash-alt"></i> Sil';
-      showToast('Silmə xətası: ' + (err.message || ''), 'error');
+      showToast('Xəta: ' + (err.message || 'Silmə mümkün olmadı'), 'error');
+      console.error('deleteUser xətası:', err);
     });
 }
 
-/* ---- Add User ---- */
+/* ============================================================
+   VIP İSTİFADƏÇİ ƏLAVƏ ET
+   ============================================================ */
 function addUser() {
   var username = document.getElementById('new-username').value.trim();
   var password = document.getElementById('new-password').value.trim();
+  var successEl = document.getElementById('add-success');
+  var errorEl   = document.getElementById('add-error');
+  var errorTxt  = document.getElementById('add-error-text');
 
-  document.getElementById('add-success').classList.remove('show');
-  document.getElementById('add-error').classList.remove('show');
+  successEl.classList.remove('show');
+  errorEl.classList.remove('show');
 
   if (!username) { showToast('İstifadəçi adı boş ola bilməz.', 'error'); return; }
   if (!password) { showToast('Parol boş ola bilməz.', 'error'); return; }
@@ -650,52 +751,76 @@ function addUser() {
   if (password.length < 2) { showToast('Parol ən az 2 simvol olmalıdır.', 'error'); return; }
 
   var btn = document.getElementById('add-user-btn');
-  btn.classList.add('loading'); btn.disabled = true;
+  btn.classList.add('loading');
+  btn.disabled = true;
 
   sbFetch('/rest/v1/vip_users', {
     method: 'POST',
-    headers: { 'Prefer': 'return=representation' },
+    headers: { 'Prefer': 'return=minimal' },
     body: JSON.stringify({ username: username, password: password })
   }, true)
     .then(function(r) {
-      btn.classList.remove('loading'); btn.disabled = false;
-      if (r.ok || r.status === 201) {
+      btn.classList.remove('loading');
+      btn.disabled = false;
+
+      if (r.ok || r.status === 201 || r.status === 200 || r.status === 204) {
         document.getElementById('new-username').value = '';
         document.getElementById('new-password').value = '';
-        document.getElementById('add-success').classList.add('show');
+        successEl.classList.add('show');
         showToast('İstifadəçi uğurla əlavə edildi!', 'success');
         loadUsers();
-        setTimeout(function() { document.getElementById('add-success').classList.remove('show'); }, 3000);
+        setTimeout(function() { successEl.classList.remove('show'); }, 3000);
       } else {
-        return r.json().then(function(e) {
-          throw new Error(e.message || (e.details ? e.details : 'Xəta baş verdi'));
+        return r.text().then(function(txt) {
+          var errMsg = 'Əlavə etmə xətası (status: ' + r.status + ')';
+          try {
+            var parsed = JSON.parse(txt);
+            if (parsed.message) errMsg = parsed.message;
+            if (parsed.details) errMsg += ' – ' + parsed.details;
+          } catch(e) {}
+          throw new Error(errMsg);
         });
       }
     })
     .catch(function(err) {
-      btn.classList.remove('loading'); btn.disabled = false;
+      btn.classList.remove('loading');
+      btn.disabled = false;
       var errMsg = err.message || 'Xəta baş verdi.';
-      if (errMsg.indexOf('unique') !== -1 || errMsg.indexOf('duplicate') !== -1) {
+      if (errMsg.toLowerCase().indexOf('unique') !== -1 ||
+          errMsg.toLowerCase().indexOf('duplicate') !== -1 ||
+          errMsg.toLowerCase().indexOf('already exists') !== -1) {
         errMsg = 'Bu istifadəçi adı artıq mövcuddur.';
       }
-      document.getElementById('add-error-text').textContent = errMsg;
-      document.getElementById('add-error').classList.add('show');
+      errorTxt.textContent = errMsg;
+      errorEl.classList.add('show');
       showToast('Xəta: ' + errMsg, 'error');
+      console.error('addUser xətası:', err);
     });
 }
 
-/* ---- HTML escape ---- */
+/* ============================================================
+   HTML ESCAPE
+   ============================================================ */
 function escHtml(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
-/* ---- Enter key for admin login ---- */
-document.getElementById('admin-login-form').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') handleAdminLogin(e);
+/* ============================================================
+   ENTER DÜYMƏSI – GİRİŞ FORMU
+   ============================================================ */
+document.getElementById('admin-login-form').addEventListener('submit', function(e) {
+  handleAdminLogin(e);
 });
 
-/* ---- Init: check session ---- */
-(function() {
+/* ============================================================
+   SESSIYA YOXLAMA – Səhifə Yüklənəndə
+   ============================================================ */
+(function initAdmin() {
   if (sessionStorage.getItem('rm_admin') === '1') {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-panel').classList.add('show');

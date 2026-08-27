@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS admin_settings (
 
 -- 3. Standart qarşılama mesajı
 INSERT INTO admin_settings (key, value)
-VALUES ('welcome_message', 'Salam')
+VALUES ('welcome_message', 'RM İdman Klubuna xoş gəldiniz!')
 ON CONFLICT (key) DO NOTHING;
 
 -- 4. Row Level Security aktivləşdirmə
@@ -42,9 +42,10 @@ DROP POLICY IF EXISTS "service_all_users" ON vip_users;
 CREATE POLICY "service_all_users" ON vip_users
   FOR ALL TO service_role USING (true) WITH CHECK (true);
 
--- 7. VIP istifadəçilər giriş üçün oxuya bilər
+-- 7. VIP istifadəçilər giriş üçün oxuya bilər (anon key ilə login)
 DROP POLICY IF EXISTS "anon_read_users" ON vip_users;
 CREATE POLICY "anon_read_users" ON vip_users
   FOR SELECT TO anon USING (true);
 
 -- Hazır! Supabase cədvəlləriniz quruldu.
+-- Admin panelə daxil olmaq üçün: username=admin, password=salam

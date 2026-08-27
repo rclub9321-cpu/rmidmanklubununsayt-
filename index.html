@@ -19,11 +19,13 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
   <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
   <link rel="dns-prefetch" href="https://wa.me" />
+  <link rel="dns-prefetch" href="https://www.instagram.com" />
   <link rel="preload" href="images/logo.png" as="image" fetchpriority="high" />
   <link rel="preload" href="css/style.css" as="style" />
   <link rel="preload" href="js/app.js" as="script" />
-  <!-- Fonts: only needed weights, display=swap for fast rendering -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Fonts: only needed weights, display=swap for fast rendering – Playfair silindi, lazım deyil -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" /></noscript>
   <!-- Font Awesome: async load -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" /></noscript>
@@ -62,7 +64,7 @@
       <li><a href="#" class="nav-link" data-page="athletes" onclick="showPage('athletes');return false;">İdmançılar</a></li>
 
       <li><a href="#" class="nav-link" data-page="campaigns" onclick="showPage('campaigns');return false;">Kampaniyalar</a></li>
-      <li><a href="vipxidmetler" class="nav-link nav-link-vip" target="_self"><i class="fas fa-crown" style="font-size:0.75rem;margin-right:4px;color:#D4AF37"></i>VIP</a></li>
+      <li><a href="vipxidmetler/index.html" class="nav-link nav-link-vip" target="_blank" rel="noopener"><i class="fas fa-crown" style="font-size:0.75rem;margin-right:4px;color:#D4AF37"></i>VIP</a></li>
     </ul>
   </nav>
 </header>

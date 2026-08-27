@@ -8,21 +8,27 @@
   padding: 0;
 }
 
-/* Performance: GPU compositing for animated elements */
+/* Performance: GPU compositing – yalnız aktiv animasiya olunan elementlər */
 .hero-logo,
-.hero-scroll,
-.animate-fade-up,
-.animate-fade-up-delay,
-.animate-fade-up-delay2 {
+.hero-scroll {
   will-change: transform, opacity;
 }
 
-/* Reduce layout thrash on static elements */
+/* Reduce layout thrash on static images */
 .gallery-item img,
 .about-img-wrap img,
-.student-img-wrap img {
+.champion-img-wrap img {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  content-visibility: auto;
+}
+
+/* Performance: contain layout for heavy sections */
+.section {
+  contain: layout style;
+}
+.hero {
+  contain: layout;
 }
 
 :root {
