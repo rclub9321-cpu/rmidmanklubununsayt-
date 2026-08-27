@@ -2364,6 +2364,166 @@ button {
 }
 
 /* =========================================
+   VIP NAV LINK
+   ========================================= */
+.nav-link-vip {
+  background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(240,208,96,0.1));
+  border: 1px solid rgba(212,175,55,0.35);
+  color: #D4AF37 !important;
+  border-radius: 50px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+}
+.nav-link-vip:hover,
+.nav-link-vip.active {
+  background: linear-gradient(135deg, #D4AF37, #F0D060) !important;
+  color: var(--black) !important;
+  border-color: #D4AF37;
+}
+
+/* =========================================
+   SPONSORS SECTION
+   ========================================= */
+.sponsors-section {
+  background: var(--dark2);
+}
+
+.sponsor-card-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.sponsor-card {
+  background: var(--dark3);
+  border: 1px solid rgba(212,175,55,0.25);
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  max-width: 820px;
+  width: 100%;
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+  transition: box-shadow var(--transition), border-color var(--transition);
+}
+
+.sponsor-card:hover {
+  border-color: rgba(212,175,55,0.5);
+  box-shadow: 0 16px 60px rgba(212,175,55,0.1);
+}
+
+.sponsor-logo-wrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sponsor-logo {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  background: #fff;
+  padding: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.sponsor-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.sponsor-name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.4rem;
+  color: #D4AF37;
+  margin-bottom: 4px;
+}
+
+.sponsor-tagline {
+  color: var(--gray);
+  font-size: 0.88rem;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.sponsor-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px 12px;
+}
+
+.sponsor-service {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gray-light);
+  font-size: 0.84rem;
+  padding: 6px 10px;
+  background: rgba(212,175,55,0.06);
+  border: 1px solid rgba(212,175,55,0.12);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
+}
+
+.sponsor-service:hover {
+  background: rgba(212,175,55,0.12);
+  border-color: rgba(212,175,55,0.3);
+  color: var(--white);
+}
+
+.sponsor-service i {
+  color: #D4AF37;
+  font-size: 0.78rem;
+  width: 14px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .sponsor-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .sponsor-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sponsor-service {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .sponsor-card {
+    padding: 24px 18px;
+    gap: 24px;
+  }
+  .sponsor-logo {
+    width: 110px;
+  }
+  .sponsor-name {
+    font-size: 1.2rem;
+  }
+  .sponsor-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  .sponsor-service {
+    font-size: 0.78rem;
+    padding: 5px 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .sponsor-services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
    PERFORMANCE OPTIMIZATIONS
    ========================================= */
 
