@@ -363,7 +363,7 @@ button {
 .hamburger span {
   display: block;
   height: 2px;
-  background: #96C80A;
+  background: var(--lime);
   border-radius: 2px;
   transition: all var(--transition);
 }
