@@ -337,7 +337,7 @@ button {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 0.82rem;
-  color: var(--gray-light);
+  color: #98FF98; /* Nanə yaşılı rəng kodu */
   border-radius: 8px;
   transition: all var(--transition);
   white-space: nowrap;
