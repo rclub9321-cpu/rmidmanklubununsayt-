@@ -306,6 +306,47 @@
       </p>
     </section>
 
+    <!-- DB SETUP ALERT -->
+    <section class="admin-section" id="db-setup-alert" style="display:none;border-color:rgba(212,175,55,0.4);background:rgba(212,175,55,0.05)">
+      <div class="admin-section-title">
+        <i class="fas fa-database" style="color:#D4AF37"></i>
+        Supabase Cədvəlləri Qurulmayıb
+      </div>
+      <p class="admin-section-desc" style="color:#D4AF37">Supabase-də cədvəllər tapılmadı. Aşağıdakı SQL-i Supabase Dashboard → SQL Editor-da icra edin:</p>
+      <div style="background:var(--dark3);border:1px solid rgba(212,175,55,0.2);border-radius:var(--radius-sm);padding:16px;font-family:monospace;font-size:0.78rem;color:var(--gray-light);white-space:pre-wrap;overflow-x:auto;margin-bottom:14px;line-height:1.6">CREATE TABLE IF NOT EXISTS vip_users (
+  id          BIGSERIAL PRIMARY KEY,
+  username    TEXT UNIQUE NOT NULL,
+  password    TEXT NOT NULL,
+  created_at  TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS admin_settings (
+  id          BIGSERIAL PRIMARY KEY,
+  key         TEXT UNIQUE NOT NULL,
+  value       TEXT NOT NULL,
+  updated_at  TIMESTAMPTZ DEFAULT NOW()
+);
+
+INSERT INTO admin_settings (key, value)
+VALUES ('welcome_message', 'Salam')
+ON CONFLICT (key) DO NOTHING;
+
+ALTER TABLE vip_users      ENABLE ROW LEVEL SECURITY;
+ALTER TABLE admin_settings ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "anon_read_settings" ON admin_settings
+  FOR SELECT TO anon USING (true);
+CREATE POLICY "service_all_settings" ON admin_settings
+  FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "service_all_users" ON vip_users
+  FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "anon_read_users" ON vip_users
+  FOR SELECT TO anon USING (true);</div>
+      <button class="btn-save" onclick="loadAdminData();document.getElementById('db-setup-alert').style.display='none';" style="margin-top:4px">
+        <i class="fas fa-redo"></i> Yenidən Yoxla
+      </button>
+    </section>
+
     <!-- USERS MANAGEMENT -->
     <section class="admin-section">
       <div class="admin-section-title">
@@ -440,15 +481,27 @@ function loadAdminData() {
 
 /* ---- Welcome Message ---- */
 function loadWelcomeMessage() {
-  sbFetch('/rest/v1/admin_settings?select=value&key=eq.welcome_message', {}, false)
-    .then(function(r) { return r.json(); })
+  sbFetch('/rest/v1/admin_settings?select=value&key=eq.welcome_message', {}, true)
+    .then(function(r) {
+      if (r.status === 404 || r.status === 406) {
+        document.getElementById('db-setup-alert').style.display = 'block';
+        throw new Error('table_not_found');
+      }
+      return r.json();
+    })
     .then(function(data) {
+      if (!data || (data.code && data.message && data.message.indexOf('does not exist') !== -1)) {
+        document.getElementById('db-setup-alert').style.display = 'block';
+        document.getElementById('current-msg-display').textContent = 'Cədvəl tapılmadı';
+        return;
+      }
       var msg = 'Salam';
-      if (data && data.length > 0) msg = data[0].value;
+      if (Array.isArray(data) && data.length > 0) msg = data[0].value;
       document.getElementById('welcome-msg-input').value = msg;
       document.getElementById('current-msg-display').textContent = msg;
     })
-    .catch(function() {
+    .catch(function(err) {
+      if (err && err.message === 'table_not_found') return;
       document.getElementById('current-msg-display').textContent = 'Yükləmə xətası';
     });
 }
@@ -498,15 +551,28 @@ function loadUsers() {
   document.getElementById('empty-users').style.display = 'none';
 
   sbFetch('/rest/v1/vip_users?select=id,username,password,created_at&order=created_at.desc', {}, true)
-    .then(function(r) { return r.json(); })
+    .then(function(r) {
+      if (r.status === 404 || r.status === 406) {
+        /* Table doesn't exist */
+        document.getElementById('db-setup-alert').style.display = 'block';
+        document.getElementById('users-loading').style.display = 'none';
+        throw new Error('table_not_found');
+      }
+      return r.json();
+    })
     .then(function(data) {
       document.getElementById('users-loading').style.display = 'none';
+      if (data && data.code && (data.code === '42P01' || data.message && data.message.indexOf('does not exist') !== -1)) {
+        document.getElementById('db-setup-alert').style.display = 'block';
+        return;
+      }
       renderUsers(data || []);
     })
-    .catch(function() {
+    .catch(function(err) {
+      if (err && err.message === 'table_not_found') return;
       document.getElementById('users-loading').style.display = 'none';
       document.getElementById('empty-users').style.display = 'block';
-      document.getElementById('empty-users').innerHTML = '<i class="fas fa-exclamation-triangle"></i><br>İstifadəçiləri yükləmək mümkün olmadı.';
+      document.getElementById('empty-users').innerHTML = '<i class="fas fa-exclamation-triangle"></i><br>İstifadəçiləri yükləmək mümkün olmadı. Supabase bağlantısını yoxlayın.';
     });
 }
 
