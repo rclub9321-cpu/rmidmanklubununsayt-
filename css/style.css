@@ -3032,3 +3032,20 @@ body {
 .page:not(.active) {
   content-visibility: hidden;
 }
+
+/* =========================================
+   HAMBURGER MOBIL RƏNG DÜZƏLİŞİ
+   ========================================= */
+.hamburger span {
+  display: block !important;
+  height: 2px !important;
+  background-color: #96C80A !important;
+  border-radius: 2px;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex !important;
+  }
+}
