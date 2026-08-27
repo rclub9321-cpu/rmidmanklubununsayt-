@@ -8,45 +8,22 @@
   padding: 0;
 }
 
-/* Performance: GPU compositing – yalnız aktiv animasiya olunan elementlər */
+/* Performance: GPU compositing for animated elements */
 .hero-logo,
-.hero-scroll {
+.hero-scroll,
+.animate-fade-up,
+.animate-fade-up-delay,
+.animate-fade-up-delay2 {
   will-change: transform, opacity;
 }
 
-/* Reduce layout thrash on static images */
+/* Reduce layout thrash on static elements */
 .gallery-item img,
 .about-img-wrap img,
-.champion-img-wrap img {
+.student-img-wrap img {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  content-visibility: auto;
-  contain-intrinsic-size: 300px 200px;
 }
-
-/* Performance: contain layout for heavy sections */
-.section {
-  contain: layout style;
-}
-.hero {
-  contain: layout;
-}
-
-/* Performance: off-screen pages hidden entirely */
-.page:not(.active) {
-  display: none !important;
-  content-visibility: hidden;
-}
-
-/* Fast tap / pointer performance */
-.btn, .btn-gold, .btn-outline, .btn-mint, .btn-whatsapp,
-.training-card, .campaign-card, .nav-link, button {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Prevent font flash */
-html { font-display: swap; }
 
 :root {
   --gold: #D4AF37;
@@ -337,7 +314,7 @@ button {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 0.82rem;
-  color: #98FF98; /* Nanə yaşılı rəng kodu */
+  color: var(--gray-light);
   border-radius: 8px;
   transition: all var(--transition);
   white-space: nowrap;
@@ -2387,166 +2364,6 @@ button {
 }
 
 /* =========================================
-   VIP NAV LINK
-   ========================================= */
-.nav-link-vip {
-  background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(240,208,96,0.1));
-  border: 1px solid rgba(212,175,55,0.35);
-  color: #D4AF37 !important;
-  border-radius: 50px;
-  padding: 6px 14px;
-  font-size: 0.8rem;
-}
-.nav-link-vip:hover,
-.nav-link-vip.active {
-  background: linear-gradient(135deg, #D4AF37, #F0D060) !important;
-  color: var(--black) !important;
-  border-color: #D4AF37;
-}
-
-/* =========================================
-   SPONSORS SECTION
-   ========================================= */
-.sponsors-section {
-  background: var(--dark2);
-}
-
-.sponsor-card-wrap {
-  display: flex;
-  justify-content: center;
-}
-
-.sponsor-card {
-  background: var(--dark3);
-  border: 1px solid rgba(212,175,55,0.25);
-  border-radius: var(--radius);
-  padding: 36px 32px;
-  max-width: 820px;
-  width: 100%;
-  display: flex;
-  gap: 36px;
-  align-items: flex-start;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.35);
-  transition: box-shadow var(--transition), border-color var(--transition);
-}
-
-.sponsor-card:hover {
-  border-color: rgba(212,175,55,0.5);
-  box-shadow: 0 16px 60px rgba(212,175,55,0.1);
-}
-
-.sponsor-logo-wrap {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sponsor-logo {
-  width: 140px;
-  height: auto;
-  object-fit: contain;
-  border-radius: var(--radius-sm);
-  background: #fff;
-  padding: 10px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-}
-
-.sponsor-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.sponsor-name {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  font-size: 1.4rem;
-  color: #D4AF37;
-  margin-bottom: 4px;
-}
-
-.sponsor-tagline {
-  color: var(--gray);
-  font-size: 0.88rem;
-  margin-bottom: 20px;
-  font-style: italic;
-}
-
-.sponsor-services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px 12px;
-}
-
-.sponsor-service {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--gray-light);
-  font-size: 0.84rem;
-  padding: 6px 10px;
-  background: rgba(212,175,55,0.06);
-  border: 1px solid rgba(212,175,55,0.12);
-  border-radius: var(--radius-sm);
-  transition: all var(--transition);
-}
-
-.sponsor-service:hover {
-  background: rgba(212,175,55,0.12);
-  border-color: rgba(212,175,55,0.3);
-  color: var(--white);
-}
-
-.sponsor-service i {
-  color: #D4AF37;
-  font-size: 0.78rem;
-  width: 14px;
-  text-align: center;
-  flex-shrink: 0;
-}
-
-@media (max-width: 900px) {
-  .sponsor-card {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .sponsor-services-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .sponsor-service {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 640px) {
-  .sponsor-card {
-    padding: 24px 18px;
-    gap: 24px;
-  }
-  .sponsor-logo {
-    width: 110px;
-  }
-  .sponsor-name {
-    font-size: 1.2rem;
-  }
-  .sponsor-services-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
-  }
-  .sponsor-service {
-    font-size: 0.78rem;
-    padding: 5px 8px;
-  }
-}
-
-@media (max-width: 400px) {
-  .sponsor-services-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* =========================================
    PERFORMANCE OPTIMIZATIONS
    ========================================= */
 
@@ -2913,139 +2730,5 @@ button {
 
   .champion-info h3 {
     font-size: 0.92rem;
-  }
-}
-
-/* =========================================
-   ADDITIONAL PERFORMANCE OPTIMIZATIONS
-   ========================================= */
-
-/* Font display optimization */
-@font-face {
-  font-display: swap;
-}
-
-/* Hardware acceleration for all interactive cards */
-.training-card,
-.campaign-card,
-.hours-card,
-.contact-card,
-.champion-card,
-.member-card,
-.gallery-item,
-.athletes-gallery-item,
-.champions-gallery-item,
-.home-training-card,
-.starter-price-option {
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  will-change: auto;
-}
-
-/* Only activate will-change on hover to save GPU memory */
-.training-card:hover,
-.campaign-card:hover,
-.hours-card:hover,
-.contact-card:hover,
-.champion-card:hover,
-.member-card:hover {
-  will-change: transform, box-shadow;
-}
-
-/* Reduce animation on battery saver */
-@media (prefers-reduced-motion: reduce) {
-  .hero-logo {
-    animation: none !important;
-  }
-  .hero-scroll {
-    animation: none !important;
-  }
-  .animate-fade-up,
-  .animate-fade-up-delay,
-  .animate-fade-up-delay2 {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-
-/* Optimize scrolling performance */
-html {
-  scroll-behavior: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Prevent layout shift for images */
-img {
-  height: auto;
-}
-
-/* Content visibility for off-screen sections */
-#page-gallery,
-#page-champions,
-#page-athletes,
-#page-campaigns,
-#page-martial-arts,
-#page-fitness {
-  content-visibility: auto;
-}
-
-/* Optimize font rendering */
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-/* Optimize nav rendering */
-.navbar {
-  transform: translateZ(0);
-  will-change: auto;
-}
-
-/* Improve tap targets on mobile */
-@media (max-width: 640px) {
-  .btn {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  .nav-link {
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .back-btn {
-    min-height: 44px;
-  }
-  .hamburger {
-    min-width: 44px;
-    min-height: 44px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-/* Optimize page loading skeleton */
-.page:not(.active) {
-  content-visibility: hidden;
-}
-
-/* =========================================
-   HAMBURGER MOBIL RƏNG DÜZƏLİŞİ
-   ========================================= */
-.hamburger span {
-  display: block !important;
-  height: 2px !important;
-  background-color: #96C80A !important;
-  border-radius: 2px;
-  transition: transform 0.22s ease, opacity 0.22s ease;
-}
-
-@media (max-width: 768px) {
-  .hamburger {
-    display: flex !important;
   }
 }
