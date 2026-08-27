@@ -9,8 +9,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
-  <link rel="preconnect" href="https://yyrcsgqvkqyezopzohxb.supabase.co" crossorigin />
-  <link rel="dns-prefetch" href="https://yyrcsgqvkqyezopzohxb.supabase.co" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" /></noscript>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'" />
@@ -28,13 +26,14 @@
     a{text-decoration:none;color:inherit}
     button{cursor:pointer;border:none;background:none;font-family:inherit}
 
+    /* HEADER */
     .vip-header{
       background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
       border-bottom:1px solid rgba(150,200,10,0.2);
       padding:14px 20px;display:flex;align-items:center;justify-content:space-between;
       position:sticky;top:0;z-index:100;
     }
-    .vip-logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+    .vip-logo{display:flex;align-items:center;gap:10px}
     .vip-logo img{width:40px;height:40px;border-radius:50%;object-fit:cover}
     .vip-logo-text{font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.9rem;color:var(--lime)}
     .vip-back-btn{
@@ -46,8 +45,10 @@
     }
     .vip-back-btn:hover{background:var(--lime);color:var(--black)}
 
+    /* MAIN */
     main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
 
+    /* LOGIN CARD */
     .login-card{
       background:var(--dark2);border:1px solid rgba(150,200,10,0.25);
       border-radius:var(--radius);padding:40px 36px;width:100%;max-width:420px;
@@ -62,8 +63,13 @@
     .login-card-header h1{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.5rem;color:var(--white);margin-bottom:6px}
     .login-card-header p{color:var(--gray);font-size:0.88rem}
 
+    /* FORM */
     .form-group{margin-bottom:18px}
-    .form-group label{display:block;font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.8rem;color:var(--gray-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+    .form-group label{
+      display:block;font-family:'Montserrat',sans-serif;font-weight:700;
+      font-size:0.8rem;color:var(--gray-light);text-transform:uppercase;
+      letter-spacing:1px;margin-bottom:8px;
+    }
     .form-input{
       width:100%;padding:13px 16px;background:var(--dark3);
       border:1px solid rgba(150,200,10,0.2);border-radius:var(--radius-sm);
@@ -73,6 +79,7 @@
     .form-input:focus{border-color:var(--lime)}
     .form-input::placeholder{color:var(--gray)}
 
+    /* LOGIN BUTTON */
     .btn-login{
       width:100%;padding:14px;background:linear-gradient(135deg,var(--lime),var(--lime-light));
       color:var(--black);border-radius:50px;font-family:'Montserrat',sans-serif;
@@ -81,8 +88,8 @@
       display:flex;align-items:center;justify-content:center;gap:8px;
     }
     .btn-login:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(150,200,10,0.4)}
-    .btn-login:disabled{opacity:0.6;cursor:not-allowed;transform:none}
 
+    /* ERROR */
     .error-msg{
       background:rgba(227,10,23,0.12);border:1px solid rgba(227,10,23,0.3);
       color:#ff6b6b;padding:10px 14px;border-radius:var(--radius-sm);
@@ -91,44 +98,37 @@
     }
     .error-msg.show{display:flex}
 
+    /* WELCOME SCREEN */
     .welcome-screen{display:none;text-align:center}
     .welcome-screen.show{display:block}
+
     .welcome-icon{
       width:80px;height:80px;background:linear-gradient(135deg,var(--lime),var(--lime-light));
       border-radius:50%;display:flex;align-items:center;justify-content:center;
       font-size:2.2rem;color:var(--black);margin:0 auto 24px;
       box-shadow:0 8px 32px rgba(150,200,10,0.4);
     }
-    .welcome-title{font-family:'Montserrat',sans-serif;font-weight:900;font-size:2.2rem;color:var(--lime);margin-bottom:12px;line-height:1.1}
+    .welcome-title{
+      font-family:'Montserrat',sans-serif;font-weight:900;
+      font-size:2.2rem;color:var(--lime);margin-bottom:12px;line-height:1.1;
+    }
     .welcome-user{color:var(--gray-light);font-size:1rem;margin-bottom:28px}
+
     .welcome-message-box{
       background:var(--dark3);border:1px solid rgba(150,200,10,0.2);
-      border-radius:var(--radius);padding:28px;margin:20px 0;
-      text-align:center;
+      border-radius:var(--radius);padding:28px;margin:20px 0;text-align:center;
+    }
+    .welcome-message-label{
+      color:var(--gray);font-size:0.82rem;margin-bottom:10px;
+      font-family:'Montserrat',sans-serif;font-weight:700;
+      text-transform:uppercase;letter-spacing:1px;
     }
     .welcome-message-text{
       font-family:'Montserrat',sans-serif;font-weight:800;
       font-size:1.8rem;color:var(--white);line-height:1.3;
     }
 
-    .btn-logout{
-      display:inline-flex;align-items:center;gap:8px;
-      background:rgba(227,10,23,0.12);border:1px solid rgba(227,10,23,0.3);
-      color:#ff6b6b;padding:11px 24px;border-radius:50px;
-      font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.88rem;
-      transition:all var(--transition);margin-top:8px;
-    }
-    .btn-logout:hover{background:rgba(227,10,23,0.25);transform:translateY(-1px)}
-
-    .spinner{
-      width:18px;height:18px;border:2px solid rgba(0,0,0,0.3);
-      border-top-color:var(--black);border-radius:50%;
-      animation:spin 0.6s linear infinite;display:none;
-    }
-    .btn-login.loading .spinner{display:block}
-    .btn-login.loading .btn-text{display:none}
-    @keyframes spin{to{transform:rotate(360deg)}}
-
+    /* VIP BADGE */
     .vip-badge{
       display:inline-flex;align-items:center;gap:6px;
       background:linear-gradient(135deg,#D4AF37,#F0D060);
@@ -137,11 +137,15 @@
       letter-spacing:0.5px;margin-bottom:12px;
     }
 
-    .connecting-msg{
-      text-align:center;color:var(--gray);font-size:0.85rem;
-      padding:12px;display:none;
+    /* LOGOUT BUTTON */
+    .btn-logout{
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(227,10,23,0.12);border:1px solid rgba(227,10,23,0.3);
+      color:#ff6b6b;padding:11px 24px;border-radius:50px;
+      font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.88rem;
+      transition:all var(--transition);margin-top:8px;
     }
-    .connecting-msg.show{display:block}
+    .btn-logout:hover{background:rgba(227,10,23,0.25);transform:translateY(-1px)}
 
     @media(max-width:480px){
       .login-card{padding:28px 20px}
@@ -162,89 +166,70 @@
 </header>
 
 <main>
-  <!-- LOGIN FORM -->
+
+  <!-- GİRİŞ FORMU -->
   <div class="login-card" id="login-section">
     <div class="login-card-header">
       <div class="login-icon"><i class="fas fa-crown"></i></div>
       <h1>VIP Xidmətlər</h1>
-      <p>Daxil olmaq üçün istifadəçi adı və parolunuzu daxil edin</p>
+      <p>Daxil olmaq üçün istifadəçi adı və kodunuzu daxil edin</p>
     </div>
 
     <div class="error-msg" id="error-msg">
       <i class="fas fa-exclamation-circle"></i>
-      <span id="error-text">İstifadəçi adı və ya parol yanlışdır.</span>
+      <span id="error-text">İstifadəçi adı və ya kod yanlışdır.</span>
     </div>
 
     <form id="login-form" onsubmit="handleLogin(event)">
       <div class="form-group">
         <label for="username">İstifadəçi Adı</label>
-        <input type="text" id="username" class="form-input" placeholder="İstifadəçi adınızı daxil edin" required autocomplete="username" />
+        <input type="text" id="username" class="form-input"
+               placeholder="İstifadəçi adınızı daxil edin"
+               required autocomplete="username" />
       </div>
       <div class="form-group">
-        <label for="password">Parol</label>
-        <input type="password" id="password" class="form-input" placeholder="Parolunuzu daxil edin" required autocomplete="current-password" />
+        <label for="password">Kod</label>
+        <input type="password" id="password" class="form-input"
+               placeholder="Kodunuzu daxil edin"
+               required autocomplete="current-password" />
       </div>
       <button type="submit" class="btn-login" id="login-btn">
-        <span class="btn-text"><i class="fas fa-sign-in-alt"></i> Daxil Ol</span>
-        <div class="spinner"></div>
+        <i class="fas fa-sign-in-alt"></i> Daxil Ol
       </button>
     </form>
-    <div class="connecting-msg" id="connecting-msg">
-      <i class="fas fa-circle-notch fa-spin" style="margin-right:6px;color:var(--lime)"></i>
-      Supabase-ə qoşulunur...
-    </div>
   </div>
 
-  <!-- WELCOME SCREEN -->
+  <!-- XOŞGƏLMƏ EKRANı -->
   <div class="login-card welcome-screen" id="welcome-section">
     <div class="vip-badge"><i class="fas fa-crown"></i> VIP Üzv</div>
     <div class="welcome-icon"><i class="fas fa-star"></i></div>
-    <div class="welcome-title" id="welcome-message-display">Salam</div>
-    <p class="welcome-user">Xoş gəldiniz, <strong id="welcome-username"></strong>!</p>
+    <div class="welcome-title">Xoş Gəldiniz!</div>
+    <p class="welcome-user">Salam, <strong id="welcome-username"></strong>!</p>
 
     <div class="welcome-message-box">
-      <p style="color:var(--gray);font-size:0.82rem;margin-bottom:10px;font-family:'Montserrat',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px;">VIP Mesaj</p>
-      <div class="welcome-message-text" id="welcome-full-message">Salam</div>
+      <p class="welcome-message-label">VIP Mesaj</p>
+      <div class="welcome-message-text" id="welcome-message-text">Salam</div>
     </div>
 
     <button class="btn-logout" onclick="handleLogout()">
       <i class="fas fa-sign-out-alt"></i> Çıxış
     </button>
   </div>
+
 </main>
 
 <script>
 'use strict';
 
 /* ============================================================
-   SUPABASE KONFİQURASİYA
-   service_role key – tam giriş icazəsi
+   İSTİFADƏÇİLƏR — vip_users.json ilə sinxronizə olunur
+   Yeni istifadəçi əlavə etmək və ya mesajı dəyişmək üçün
+   repo-dakı vip_users.json faylını redaktə edin.
    ============================================================ */
-var SUPABASE_URL = 'https://yyrcsgqvkqyezopzohxb.supabase.co';
-var SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5cmNzcWd2a3F5ZXpvcHpvaHhiIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4Nzg0Mzg0NSwiZXhwIjoyMTAzNDE5ODQ1fQ.KXszL2Oap9DbyBsKYJF9CtmanJMFJ2yCclJGjFA0yaA';
-var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5cmNzcWd2a3F5ZXpvcHpvaHhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4NDM4NDUsImV4cCI6MjEwMzQxOTg0NX0.Jy1LFYWSeNWx6tEf1Oxw88_n1xvb76DxnVpwKvpkCZo';
+var VIP_USERS_URL = '../vip_users.json';
 
 /* ============================================================
-   SUPABASE FETCH HELPER
-   useService=true → service_role key istifadə edir
-   ============================================================ */
-function sbFetch(path, opts, useService) {
-  var key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_ANON_KEY;
-  var baseHeaders = {
-    'apikey': key,
-    'Authorization': 'Bearer ' + key,
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-  };
-  var extraHeaders = (opts && opts.headers) ? opts.headers : {};
-  var mergedHeaders = Object.assign({}, baseHeaders, extraHeaders);
-  var fetchOpts = Object.assign({}, opts || {});
-  fetchOpts.headers = mergedHeaders;
-  return fetch(SUPABASE_URL + path, fetchOpts);
-}
-
-/* ============================================================
-   SESSION HELPERS
+   SESSION HELPERLƏRİ
    ============================================================ */
 function saveSession(username) {
   try { sessionStorage.setItem('vip_user', username); } catch(e) {}
@@ -257,44 +242,25 @@ function getSession() {
 }
 
 /* ============================================================
-   UI HELPERS
+   UI HELPERLƏRİ
    ============================================================ */
-function showLoginSection() {
-  document.getElementById('login-section').style.display = '';
-  document.getElementById('welcome-section').classList.remove('show');
-}
-
-function showWelcomeSection(username, message) {
-  document.getElementById('login-section').style.display = 'none';
-  document.getElementById('welcome-username').textContent = username;
-  var msg = message || 'Salam';
-  document.getElementById('welcome-message-display').textContent = msg;
-  document.getElementById('welcome-full-message').textContent = msg;
-  document.getElementById('welcome-section').classList.add('show');
-}
-
 function showError(msg) {
   var el = document.getElementById('error-msg');
   document.getElementById('error-text').textContent = msg;
   el.classList.add('show');
 }
-
 function hideError() {
   document.getElementById('error-msg').classList.remove('show');
 }
-
-function setLoading(isLoading) {
-  var btn = document.getElementById('login-btn');
-  var conn = document.getElementById('connecting-msg');
-  if (isLoading) {
-    btn.classList.add('loading');
-    btn.disabled = true;
-    conn.classList.add('show');
-  } else {
-    btn.classList.remove('loading');
-    btn.disabled = false;
-    conn.classList.remove('show');
-  }
+function showLoginSection() {
+  document.getElementById('login-section').style.display = '';
+  document.getElementById('welcome-section').classList.remove('show');
+}
+function showWelcomeSection(username, message) {
+  document.getElementById('login-section').style.display = 'none';
+  document.getElementById('welcome-username').textContent = username;
+  document.getElementById('welcome-message-text').textContent = message || 'Salam';
+  document.getElementById('welcome-section').classList.add('show');
 }
 
 /* ============================================================
@@ -305,61 +271,35 @@ function handleLogin(e) {
   hideError();
 
   var username = document.getElementById('username').value.trim();
-  var password = document.getElementById('password').value;
+  var password = document.getElementById('password').value.trim();
 
   if (!username || !password) {
     showError('Zəhmət olmasa bütün sahələri doldurun.');
     return;
   }
 
-  setLoading(true);
-
-  /* service_role key ilə vip_users cədvəlindən istifadəçini yoxla */
-  sbFetch('/rest/v1/vip_users?select=id,username,password&username=eq.' + encodeURIComponent(username), {
-    method: 'GET'
-  }, true)
+  fetch(VIP_USERS_URL + '?_=' + Date.now())
     .then(function(r) {
-      if (!r.ok) {
-        throw new Error('Supabase cavab xətası: ' + r.status);
-      }
+      if (!r.ok) throw new Error('İstifadəçi məlumatları yüklənə bilmədi.');
       return r.json();
     })
-    .then(function(data) {
-      if (!Array.isArray(data) || data.length === 0) {
-        setLoading(false);
-        showError('İstifadəçi adı tapılmadı. Zəhmət olmasa yenidən yoxlayın.');
+    .then(function(users) {
+      var found = null;
+      for (var i = 0; i < users.length; i++) {
+        if (users[i].username === username && users[i].password === password) {
+          found = users[i];
+          break;
+        }
+      }
+      if (!found) {
+        showError('İstifadəçi adı və ya kod yanlışdır.');
         return;
       }
-
-      var user = data[0];
-      if (String(user.password) !== String(password)) {
-        setLoading(false);
-        showError('Parol yanlışdır. Zəhmət olmasa yenidən cəhd edin.');
-        return;
-      }
-
-      /* İstifadəçi doğrulandı – qarşılama mesajını yüklə */
-      return sbFetch('/rest/v1/admin_settings?select=value&key=eq.welcome_message', {
-        method: 'GET'
-      }, false)
-        .then(function(r) {
-          if (!r.ok) { throw new Error('Settings xətası: ' + r.status); }
-          return r.json();
-        })
-        .then(function(settings) {
-          setLoading(false);
-          var msg = 'RM İdman Klubuna xoş gəldiniz!';
-          if (settings && Array.isArray(settings) && settings.length > 0 && settings[0].value) {
-            msg = settings[0].value;
-          }
-          saveSession(username);
-          showWelcomeSection(username, msg);
-        });
+      saveSession(username);
+      showWelcomeSection(username, found.message || 'Salam');
     })
     .catch(function(err) {
-      setLoading(false);
-      console.error('VIP login xətası:', err);
-      showError('Xəta baş verdi: ' + (err.message || 'Bağlantı problemi. Yenidən cəhd edin.'));
+      showError('Xəta: ' + (err.message || 'Bağlantı problemi.'));
     });
 }
 
@@ -375,30 +315,23 @@ function handleLogout() {
 }
 
 /* ============================================================
-   İNİT – Mövcud sessionu yoxla
+   İNİT — Mövcud sessionu yoxla
    ============================================================ */
 (function init() {
   var existing = getSession();
   if (!existing) return;
 
-  /* Aktiv sessionu yenilə */
-  sbFetch('/rest/v1/admin_settings?select=value&key=eq.welcome_message', {
-    method: 'GET'
-  }, false)
-    .then(function(r) {
-      if (!r.ok) { throw new Error('status ' + r.status); }
-      return r.json();
-    })
-    .then(function(settings) {
-      var msg = 'RM İdman Klubuna xoş gəldiniz!';
-      if (settings && Array.isArray(settings) && settings.length > 0 && settings[0].value) {
-        msg = settings[0].value;
+  fetch(VIP_USERS_URL + '?_=' + Date.now())
+    .then(function(r) { return r.json(); })
+    .then(function(users) {
+      var found = null;
+      for (var i = 0; i < users.length; i++) {
+        if (users[i].username === existing) { found = users[i]; break; }
       }
-      showWelcomeSection(existing, msg);
+      showWelcomeSection(existing, found ? (found.message || 'Salam') : 'Salam');
     })
-    .catch(function(err) {
-      console.warn('Session yenilənmədi, default göstərilir:', err);
-      showWelcomeSection(existing, 'RM İdman Klubuna xoş gəldiniz!');
+    .catch(function() {
+      showWelcomeSection(existing, 'Salam');
     });
 })();
 </script>
