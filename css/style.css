@@ -2732,3 +2732,225 @@ button {
     font-size: 0.92rem;
   }
 }
+
+/* =========================================
+   SPONSORS / TƏRƏFDAŞLARIMİZ SECTION
+   ========================================= */
+.sponsors-section {
+  background: linear-gradient(180deg, var(--dark2) 0%, var(--black) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.sponsors-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(150,200,10,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 50%, rgba(212,175,55,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.sponsor-card-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.sponsor-card {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0;
+  background: var(--dark2);
+  border: 1px solid rgba(212,175,55,0.25);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(212,175,55,0.08);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.sponsor-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--lime), var(--gold));
+  z-index: 2;
+}
+
+.sponsor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.3);
+  border-color: rgba(212,175,55,0.5);
+}
+
+/* Logo panel – sol tərəf */
+.sponsor-logo-wrap {
+  background: linear-gradient(135deg, var(--dark3), rgba(212,175,55,0.06));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 28px;
+  border-right: 1px solid rgba(212,175,55,0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.sponsor-logo-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(212,175,55,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.sponsor-logo {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 16px rgba(212,175,55,0.25));
+  transition: filter 0.3s ease, transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.sponsor-card:hover .sponsor-logo {
+  filter: drop-shadow(0 6px 24px rgba(212,175,55,0.45));
+  transform: scale(1.05);
+}
+
+/* Info panel – sağ tərəf */
+.sponsor-info {
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sponsor-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.sponsor-tagline {
+  font-size: 0.92rem;
+  color: var(--gray-light);
+  font-style: italic;
+  padding-left: 14px;
+  border-left: 3px solid var(--lime);
+  line-height: 1.5;
+}
+
+/* Xidmətlər grid */
+.sponsor-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.sponsor-service {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--dark3);
+  border: 1px solid rgba(212,175,55,0.12);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-size: 0.82rem;
+  color: var(--gray-light);
+  font-weight: 600;
+  transition: all 0.22s ease;
+  cursor: default;
+}
+
+.sponsor-service:hover {
+  background: rgba(212,175,55,0.08);
+  border-color: rgba(212,175,55,0.3);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+.sponsor-service i {
+  color: var(--gold);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  width: 16px;
+  text-align: center;
+  transition: color 0.22s ease;
+}
+
+.sponsor-service:hover i {
+  color: var(--lime);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sponsor-card {
+    grid-template-columns: 1fr;
+  }
+
+  .sponsor-logo-wrap {
+    border-right: none;
+    border-bottom: 1px solid rgba(212,175,55,0.15);
+    padding: 28px 20px;
+  }
+
+  .sponsor-logo {
+    width: 110px;
+  }
+
+  .sponsor-info {
+    padding: 24px 22px;
+  }
+
+  .sponsor-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sponsor-name {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .sponsor-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .sponsor-service {
+    padding: 8px 10px;
+    font-size: 0.78rem;
+  }
+
+  .sponsor-info {
+    padding: 20px 16px;
+  }
+
+  .sponsor-name {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sponsor-services-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+  }
+
+  .sponsor-service {
+    font-size: 0.75rem;
+    padding: 7px 9px;
+  }
+}
