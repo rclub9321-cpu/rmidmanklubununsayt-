@@ -20,6 +20,8 @@
   <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
   <link rel="dns-prefetch" href="https://wa.me" />
   <link rel="dns-prefetch" href="https://www.instagram.com" />
+  <link rel="dns-prefetch" href="https://maps.app.goo.gl" />
+  <!-- Critical resource preloads -->
   <link rel="preload" href="images/logo.png" as="image" fetchpriority="high" />
   <link rel="preload" href="css/style.css" as="style" />
   <link rel="preload" href="js/app.js" as="script" />
@@ -64,7 +66,7 @@
       <li><a href="#" class="nav-link" data-page="athletes" onclick="showPage('athletes');return false;">İdmançılar</a></li>
 
       <li><a href="#" class="nav-link" data-page="campaigns" onclick="showPage('campaigns');return false;">Kampaniyalar</a></li>
-      <li><a href="vipxidmetler/index.html" class="nav-link nav-link-vip" target="_blank" rel="noopener"><i class="fas fa-crown" style="font-size:0.75rem;margin-right:4px;color:#D4AF37"></i>VIP</a></li>
+      <li><a href="vipxidmetler/index.html" class="nav-link nav-link-vip" onclick="window.open('vipxidmetler/index.html','_blank','noopener,noreferrer');return false;"><i class="fas fa-crown" style="font-size:0.75rem;margin-right:4px;color:#D4AF37"></i>VIP</a></li>
     </ul>
   </nav>
 </header>

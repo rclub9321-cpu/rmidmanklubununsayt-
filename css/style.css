@@ -21,6 +21,7 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   content-visibility: auto;
+  contain-intrinsic-size: 300px 200px;
 }
 
 /* Performance: contain layout for heavy sections */
@@ -30,6 +31,22 @@
 .hero {
   contain: layout;
 }
+
+/* Performance: off-screen pages hidden entirely */
+.page:not(.active) {
+  display: none !important;
+  content-visibility: hidden;
+}
+
+/* Fast tap / pointer performance */
+.btn, .btn-gold, .btn-outline, .btn-mint, .btn-whatsapp,
+.training-card, .campaign-card, .nav-link, button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent font flash */
+html { font-display: swap; }
 
 :root {
   --gold: #D4AF37;

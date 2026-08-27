@@ -136,6 +136,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var navLinkEls = document.querySelectorAll('.nav-link');
   for (var i = 0; i < navLinkEls.length; i++) {
     (function(link) {
+      /* VIP link – data-page yoxdur, brauzer default davranışını saxla */
+      if (!link.getAttribute('data-page')) return;
       link.addEventListener('click', function(e) {
         e.preventDefault();
         var targetPage = link.getAttribute('data-page');

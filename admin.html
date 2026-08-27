@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
-  <link rel="dns-prefetch" href="https://yyrcsgqvkqyezopzohxb.supabase.co" />
   <link rel="preconnect" href="https://yyrcsgqvkqyezopzohxb.supabase.co" crossorigin />
+  <link rel="dns-prefetch" href="https://yyrcsgqvkqyezopzohxb.supabase.co" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" /></noscript>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'" />
@@ -95,7 +95,7 @@
     #admin-panel.show{display:block}
 
     .admin-header{
-      background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);
+      background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
       border-bottom:1px solid rgba(150,200,10,0.2);
       padding:14px 24px;display:flex;align-items:center;
       justify-content:space-between;position:sticky;top:0;z-index:100;
@@ -133,7 +133,6 @@
     .admin-section-desc{color:var(--gray);font-size:0.85rem;margin-bottom:22px}
     .section-divider{height:1px;background:rgba(150,200,10,0.1);margin:20px 0}
 
-    /* Welcome message editor */
     .welcome-editor{display:flex;gap:12px;align-items:flex-end}
     .welcome-editor .form-input{flex:1;padding:12px 16px}
     .btn-save{
@@ -147,7 +146,6 @@
     .btn-save:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 20px rgba(150,200,10,0.35)}
     .btn-save:disabled{opacity:0.5;cursor:not-allowed}
 
-    /* Users table */
     .users-table{width:100%;border-collapse:collapse}
     .users-table th{
       font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.78rem;
@@ -181,7 +179,6 @@
     }
     .empty-users i{font-size:2rem;margin-bottom:10px;display:block;color:var(--dark3)}
 
-    /* Add user form */
     .add-user-form{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;margin-top:20px}
     .add-user-form .form-group{margin-bottom:0}
 
@@ -200,7 +197,6 @@
     }
     .password-cell:hover{color:var(--white)}
 
-    /* Spinner */
     .spinner{
       width:14px;height:14px;border:2px solid rgba(0,0,0,0.3);
       border-top-color:var(--black);border-radius:50%;
@@ -222,6 +218,16 @@
     .toast.show{transform:translateY(0);opacity:1}
     .toast.success{color:var(--lime)}
     .toast.error{color:#ff6b6b;border-color:rgba(227,10,23,0.3)}
+
+    /* Supabase bağlantı statusu */
+    .sb-status{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:0.78rem;font-family:'Montserrat',sans-serif;font-weight:700;
+      padding:4px 12px;border-radius:50px;margin-left:8px;
+    }
+    .sb-status.connected{background:rgba(150,200,10,0.12);color:var(--lime);border:1px solid rgba(150,200,10,0.3)}
+    .sb-status.error{background:rgba(227,10,23,0.12);color:#ff6b6b;border:1px solid rgba(227,10,23,0.3)}
+    .sb-status.loading{background:rgba(255,200,0,0.12);color:#FFD700;border:1px solid rgba(255,200,0,0.3)}
 
     @media(max-width:640px){
       .add-user-form{grid-template-columns:1fr;gap:10px}
@@ -246,11 +252,11 @@
     <form id="admin-login-form" onsubmit="handleAdminLogin(event)">
       <div class="form-group">
         <label>İstifadəçi Adı</label>
-        <input type="text" id="admin-username" class="form-input" placeholder="admin" required />
+        <input type="text" id="admin-username" class="form-input" placeholder="admin" required autocomplete="username" />
       </div>
       <div class="form-group">
         <label>Parol</label>
-        <input type="password" id="admin-password" class="form-input" placeholder="••••••" required />
+        <input type="password" id="admin-password" class="form-input" placeholder="••••••" required autocomplete="current-password" />
       </div>
       <button type="submit" class="btn-primary" id="admin-login-btn">
         <span class="btn-text"><i class="fas fa-sign-in-alt"></i> Daxil Ol</span>
@@ -269,6 +275,7 @@
         <span class="admin-logo-text">RM İDMAN KLUBU</span>
       </div>
       <span class="admin-badge"><i class="fas fa-shield-alt"></i> Admin</span>
+      <span class="sb-status loading" id="sb-status"><i class="fas fa-circle-notch fa-spin"></i> Qoşulur...</span>
     </div>
     <button class="btn-logout-header" onclick="adminLogout()">
       <i class="fas fa-sign-out-alt"></i> Çıxış
@@ -276,40 +283,6 @@
   </header>
 
   <div class="admin-main">
-
-    <!-- WELCOME MESSAGE EDITOR -->
-    <section class="admin-section">
-      <div class="admin-section-title">
-        <i class="fas fa-comment-edit"></i>
-        VIP Xidmətlər – Qarşılama Mesajı
-      </div>
-      <p class="admin-section-desc">VIP üzvlər daxil olduqda görünəcək mesajı buradan dəyişdirin.</p>
-
-      <div class="success-box" id="msg-success">
-        <i class="fas fa-check-circle"></i>
-        <span>Mesaj uğurla yeniləndi!</span>
-      </div>
-      <div class="error-box" id="msg-error">
-        <i class="fas fa-times-circle"></i>
-        <span id="msg-error-text">Xəta baş verdi.</span>
-      </div>
-
-      <label class="form-group" style="margin-bottom:0">
-        <span style="display:block;font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.78rem;color:var(--gray-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Mesaj Məzmunu</span>
-        <div class="welcome-editor">
-          <input type="text" id="welcome-msg-input" class="form-input" placeholder="Salam" />
-          <button class="btn-save" id="save-msg-btn" onclick="saveWelcomeMessage()">
-            <span class="btn-text"><i class="fas fa-save"></i> Yadda Saxla</span>
-            <div class="spinner"></div>
-          </button>
-        </div>
-      </label>
-
-      <p style="color:var(--gray);font-size:0.8rem;margin-top:10px">
-        <i class="fas fa-info-circle" style="color:var(--lime);margin-right:6px"></i>
-        Cari mesaj: <strong id="current-msg-display" style="color:var(--gray-light)">Yüklənir...</strong>
-      </p>
-    </section>
 
     <!-- DB SETUP ALERT -->
     <section class="admin-section" id="db-setup-alert" style="display:none;border-color:rgba(212,175,55,0.4);background:rgba(212,175,55,0.05)">
@@ -333,23 +306,64 @@ CREATE TABLE IF NOT EXISTS admin_settings (
 );
 
 INSERT INTO admin_settings (key, value)
-VALUES ('welcome_message', 'Salam')
+VALUES ('welcome_message', 'RM İdman Klubuna xoş gəldiniz!')
 ON CONFLICT (key) DO NOTHING;
 
 ALTER TABLE vip_users      ENABLE ROW LEVEL SECURITY;
 ALTER TABLE admin_settings ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "anon_read_settings" ON admin_settings;
 CREATE POLICY "anon_read_settings" ON admin_settings
   FOR SELECT TO anon USING (true);
+
+DROP POLICY IF EXISTS "service_all_settings" ON admin_settings;
 CREATE POLICY "service_all_settings" ON admin_settings
   FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "service_all_users" ON vip_users;
 CREATE POLICY "service_all_users" ON vip_users
   FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "anon_read_users" ON vip_users;
 CREATE POLICY "anon_read_users" ON vip_users
   FOR SELECT TO anon USING (true);</div>
-      <button class="btn-save" onclick="loadAdminData();document.getElementById('db-setup-alert').style.display='none';" style="margin-top:4px">
+      <button class="btn-save" onclick="retryLoad()">
         <i class="fas fa-redo"></i> Yenidən Yoxla
       </button>
+    </section>
+
+    <!-- WELCOME MESSAGE EDITOR -->
+    <section class="admin-section">
+      <div class="admin-section-title">
+        <i class="fas fa-comment-edit"></i>
+        VIP Xidmətlər – Qarşılama Mesajı
+      </div>
+      <p class="admin-section-desc">VIP üzvlər daxil olduqda görünəcək mesajı buradan dəyişdirin.</p>
+
+      <div class="success-box" id="msg-success">
+        <i class="fas fa-check-circle"></i>
+        <span>Mesaj uğurla yeniləndi!</span>
+      </div>
+      <div class="error-box" id="msg-error">
+        <i class="fas fa-times-circle"></i>
+        <span id="msg-error-text">Xəta baş verdi.</span>
+      </div>
+
+      <label class="form-group" style="margin-bottom:0">
+        <span style="display:block;font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.78rem;color:var(--gray-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Mesaj Məzmunu</span>
+        <div class="welcome-editor">
+          <input type="text" id="welcome-msg-input" class="form-input" placeholder="RM İdman Klubuna xoş gəldiniz!" />
+          <button class="btn-save" id="save-msg-btn" onclick="saveWelcomeMessage()">
+            <span class="btn-text"><i class="fas fa-save"></i> Yadda Saxla</span>
+            <div class="spinner"></div>
+          </button>
+        </div>
+      </label>
+
+      <p style="color:var(--gray);font-size:0.8rem;margin-top:10px">
+        <i class="fas fa-info-circle" style="color:var(--lime);margin-right:6px"></i>
+        Cari mesaj: <strong id="current-msg-display" style="color:var(--gray-light)">Yüklənir...</strong>
+      </p>
     </section>
 
     <!-- USERS MANAGEMENT -->
@@ -400,11 +414,11 @@ CREATE POLICY "anon_read_users" ON vip_users
       <div class="add-user-form">
         <div class="form-group">
           <label>İstifadəçi Adı</label>
-          <input type="text" id="new-username" class="form-input" placeholder="istifadeci_adi" />
+          <input type="text" id="new-username" class="form-input" placeholder="istifadeci_adi" autocomplete="off" />
         </div>
         <div class="form-group">
           <label>Parol</label>
-          <input type="text" id="new-password" class="form-input" placeholder="parol123" />
+          <input type="text" id="new-password" class="form-input" placeholder="parol123" autocomplete="off" />
         </div>
         <button class="btn-save" id="add-user-btn" onclick="addUser()" style="margin-top:22px">
           <span class="btn-text"><i class="fas fa-plus"></i> Əlavə Et</span>
@@ -423,19 +437,19 @@ CREATE POLICY "anon_read_users" ON vip_users
 'use strict';
 
 /* ============================================================
-   SUPABASE CONFIG – service_role key ilə tam icazə
+   SUPABASE KONFİQURASİYA
    ============================================================ */
 var SUPABASE_URL = 'https://yyrcsgqvkqyezopzohxb.supabase.co';
 var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5cmNzcWd2a3F5ZXpvcHpvaHhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4NDM4NDUsImV4cCI6MjEwMzQxOTg0NX0.Jy1LFYWSeNWx6tEf1Oxw88_n1xvb76DxnVpwKvpkCZo';
 var SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5cmNzcWd2a3F5ZXpvcHpvaHhiIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4Nzg0Mzg0NSwiZXhwIjoyMTAzNDE5ODQ1fQ.KXszL2Oap9DbyBsKYJF9CtmanJMFJ2yCclJGjFA0yaA';
 
-/* Admin panel giriş məlumatları */
 var ADMIN_USER = 'admin';
 var ADMIN_PASS = 'salam';
 
 /* ============================================================
    SUPABASE FETCH HELPER
-   useService=true olduqda service_role key istifadə edilir
+   useService=true → service_role key (tam icazə)
+   useService=false → anon key
    ============================================================ */
 function sbFetch(path, opts, useService) {
   var key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_ANON_KEY;
@@ -453,12 +467,30 @@ function sbFetch(path, opts, useService) {
 }
 
 /* ============================================================
+   SUPABASE BAĞLANTI STATUSU
+   ============================================================ */
+function setSupabaseStatus(status, msg) {
+  var el = document.getElementById('sb-status');
+  if (!el) return;
+  el.className = 'sb-status ' + status;
+  if (status === 'connected') {
+    el.innerHTML = '<i class="fas fa-check-circle"></i> Bağlı';
+  } else if (status === 'error') {
+    el.innerHTML = '<i class="fas fa-times-circle"></i> ' + (msg || 'Xəta');
+  } else {
+    el.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Qoşulur...';
+  }
+}
+
+/* ============================================================
    TOAST BİLDİRİŞİ
    ============================================================ */
 var toastTimer;
 function showToast(msg, type) {
   var t = document.getElementById('toast');
-  t.innerHTML = (type === 'success' ? '<i class="fas fa-check-circle"></i> ' : '<i class="fas fa-exclamation-circle"></i> ') + msg;
+  t.innerHTML = (type === 'success'
+    ? '<i class="fas fa-check-circle"></i> '
+    : '<i class="fas fa-exclamation-circle"></i> ') + msg;
   t.className = 'toast ' + (type || 'success') + ' show';
   clearTimeout(toastTimer);
   toastTimer = setTimeout(function() { t.classList.remove('show'); }, 3500);
@@ -478,13 +510,12 @@ function handleAdminLogin(e) {
   btn.classList.add('loading');
   btn.disabled = true;
 
-  /* Qısa gecikmə ilə giriş (UI feedback üçün) */
   setTimeout(function() {
     btn.classList.remove('loading');
     btn.disabled = false;
 
     if (u === ADMIN_USER && p === ADMIN_PASS) {
-      sessionStorage.setItem('rm_admin', '1');
+      try { sessionStorage.setItem('rm_admin', '1'); } catch(e) {}
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('admin-panel').classList.add('show');
       loadAdminData();
@@ -492,65 +523,83 @@ function handleAdminLogin(e) {
       document.getElementById('login-error-text').textContent = 'İstifadəçi adı və ya parol yanlışdır.';
       errEl.classList.add('show');
     }
-  }, 400);
+  }, 350);
 }
 
 function adminLogout() {
-  sessionStorage.removeItem('rm_admin');
+  try { sessionStorage.removeItem('rm_admin'); } catch(e) {}
   document.getElementById('admin-panel').classList.remove('show');
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('admin-username').value = '';
   document.getElementById('admin-password').value = '';
+  document.getElementById('login-error').classList.remove('show');
 }
 
 /* ============================================================
    ADMIN DATA YÜKLƏMƏ
    ============================================================ */
 function loadAdminData() {
+  setSupabaseStatus('loading');
   loadWelcomeMessage();
   loadUsers();
 }
 
+function retryLoad() {
+  document.getElementById('db-setup-alert').style.display = 'none';
+  loadAdminData();
+}
+
 /* ============================================================
-   VIP QARŞILAMA MESAJI
+   VIP QARŞILAMA MESAJI – YÜKLƏ
    ============================================================ */
 function loadWelcomeMessage() {
   document.getElementById('current-msg-display').textContent = 'Yüklənir...';
 
-  sbFetch('/rest/v1/admin_settings?select=value&key=eq.welcome_message', {
+  sbFetch('/rest/v1/admin_settings?select=value&key=eq.welcome_message&limit=1', {
     method: 'GET'
   }, true)
     .then(function(r) {
-      if (!r.ok) {
-        if (r.status === 404 || r.status === 406 || r.status === 401) {
-          document.getElementById('db-setup-alert').style.display = 'block';
-          document.getElementById('current-msg-display').textContent = 'Cədvəl tapılmadı';
-          return null;
-        }
+      if (r.status === 401 || r.status === 403) {
+        throw new Error('Supabase icazə xətası: ' + r.status + '. Service role key yanlış ola bilər.');
+      }
+      if (!r.ok && r.status !== 200) {
+        throw new Error('Supabase cavab xətası: ' + r.status);
       }
       return r.json();
     })
     .then(function(data) {
-      if (!data) return;
       /* Supabase xəta cavabını yoxla */
-      if (data && !Array.isArray(data) && data.code) {
-        document.getElementById('db-setup-alert').style.display = 'block';
-        document.getElementById('current-msg-display').textContent = 'Cədvəl tapılmadı';
-        return;
+      if (data && !Array.isArray(data) && (data.code || data.error)) {
+        var errMsg = data.message || data.error || 'Cədvəl tapılmadı';
+        /* 42P01 = cədvəl mövcud deyil */
+        if (data.code === '42P01' || String(errMsg).toLowerCase().indexOf('does not exist') !== -1) {
+          document.getElementById('db-setup-alert').style.display = 'block';
+          document.getElementById('current-msg-display').textContent = 'Cədvəl qurulmayıb';
+          setSupabaseStatus('error', 'Cədvəl yoxdur');
+          return;
+        }
+        throw new Error(errMsg);
       }
-      var msg = 'Salam';
-      if (Array.isArray(data) && data.length > 0) {
-        msg = data[0].value || 'Salam';
+
+      var msg = 'RM İdman Klubuna xoş gəldiniz!';
+      if (Array.isArray(data) && data.length > 0 && data[0].value) {
+        msg = data[0].value;
       }
       document.getElementById('welcome-msg-input').value = msg;
       document.getElementById('current-msg-display').textContent = msg;
+      setSupabaseStatus('connected');
     })
     .catch(function(err) {
       console.error('loadWelcomeMessage xətası:', err);
       document.getElementById('current-msg-display').textContent = 'Bağlantı xətası';
+      setSupabaseStatus('error', 'Bağlantı yoxdur');
+      showToast('Supabase bağlantı xətası: ' + (err.message || 'Bilinmir'), 'error');
     });
 }
 
+/* ============================================================
+   VIP QARŞILAMA MESAJI – SAXLA
+   ============================================================ */
 function saveWelcomeMessage() {
   var msg = document.getElementById('welcome-msg-input').value.trim();
   if (!msg) { showToast('Mesaj boş ola bilməz.', 'error'); return; }
@@ -561,7 +610,6 @@ function saveWelcomeMessage() {
   document.getElementById('msg-success').classList.remove('show');
   document.getElementById('msg-error').classList.remove('show');
 
-  /* UPSERT: əvvəlcə DELETE sonra INSERT etmək əvəzinə merge-duplicates istifadə edirik */
   sbFetch('/rest/v1/admin_settings', {
     method: 'POST',
     headers: {
@@ -576,7 +624,8 @@ function saveWelcomeMessage() {
     .then(function(r) {
       btn.classList.remove('loading');
       btn.disabled = false;
-      if (r.ok || r.status === 200 || r.status === 201 || r.status === 204) {
+
+      if (r.status === 200 || r.status === 201 || r.status === 204) {
         document.getElementById('msg-success').classList.add('show');
         document.getElementById('current-msg-display').textContent = msg;
         showToast('Mesaj uğurla yadda saxlanıldı!', 'success');
@@ -589,7 +638,8 @@ function saveWelcomeMessage() {
           try {
             var parsed = JSON.parse(txt);
             if (parsed.message) errMsg = parsed.message;
-          } catch(e) {}
+            if (parsed.details) errMsg += ' – ' + parsed.details;
+          } catch(ex) {}
           throw new Error(errMsg);
         });
       }
@@ -610,34 +660,38 @@ function saveWelcomeMessage() {
    ============================================================ */
 function loadUsers() {
   var loadingEl = document.getElementById('users-loading');
-  var tableEl = document.getElementById('users-table');
-  var emptyEl = document.getElementById('empty-users');
+  var tableEl   = document.getElementById('users-table');
+  var emptyEl   = document.getElementById('empty-users');
 
   loadingEl.style.display = 'block';
   tableEl.style.display = 'none';
   emptyEl.style.display = 'none';
 
   sbFetch('/rest/v1/vip_users?select=id,username,password,created_at&order=created_at.desc', {
-    method: 'GET'
+    method: 'GET',
+    headers: { 'Prefer': 'count=none' }
   }, true)
     .then(function(r) {
+      if (r.status === 401 || r.status === 403) {
+        throw new Error('Supabase icazə xətası: ' + r.status);
+      }
       if (!r.ok) {
-        if (r.status === 404 || r.status === 406 || r.status === 401) {
-          document.getElementById('db-setup-alert').style.display = 'block';
-          loadingEl.style.display = 'none';
-          return null;
-        }
+        throw new Error('Supabase cavab xətası: ' + r.status);
       }
       return r.json();
     })
     .then(function(data) {
       loadingEl.style.display = 'none';
-      if (!data) return;
 
       /* Supabase xəta obyektini yoxla */
-      if (data && !Array.isArray(data) && data.code) {
-        document.getElementById('db-setup-alert').style.display = 'block';
-        return;
+      if (data && !Array.isArray(data) && (data.code || data.error)) {
+        var errMsg = data.message || data.error || 'Xəta';
+        if (data.code === '42P01' || String(errMsg).toLowerCase().indexOf('does not exist') !== -1) {
+          document.getElementById('db-setup-alert').style.display = 'block';
+          setSupabaseStatus('error', 'Cədvəl yoxdur');
+          return;
+        }
+        throw new Error(errMsg);
       }
 
       renderUsers(Array.isArray(data) ? data : []);
@@ -645,7 +699,10 @@ function loadUsers() {
     .catch(function(err) {
       loadingEl.style.display = 'none';
       emptyEl.style.display = 'block';
-      emptyEl.innerHTML = '<i class="fas fa-exclamation-triangle"></i><br>Bağlantı xətası baş verdi. İnternet bağlantınızı və Supabase URL-ni yoxlayın.';
+      emptyEl.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#FFD700"></i><br>' +
+        'Bağlantı xətası baş verdi.<br>' +
+        '<small style="font-size:0.8rem;color:var(--gray)">' + escHtml(err.message || '') + '</small>';
+      setSupabaseStatus('error', 'Bağlantı yoxdur');
       console.error('loadUsers xətası:', err);
     });
 }
@@ -663,7 +720,7 @@ function renderUsers(users) {
 
   if (users.length === 0) {
     emptyEl.style.display = 'block';
-    emptyEl.innerHTML = '<i class="fas fa-user-slash"></i><br>Heç bir VIP istifadəçi tapılmadı. Aşağıdakı formdan əlavə edin.';
+    emptyEl.innerHTML = '<i class="fas fa-user-slash"></i><br>Heç bir VIP istifadəçi tapılmadı.<br>Aşağıdakı formdan əlavə edin.';
     return;
   }
 
@@ -677,13 +734,14 @@ function renderUsers(users) {
       : '-';
     var safePass = escHtml(String(u.password || ''));
     var safeName = escHtml(String(u.username || ''));
+    var userId   = Number(u.id);
 
     tr.innerHTML =
       '<td><span class="user-name-cell">' + safeName + '</span></td>' +
       '<td><span class="password-cell" title="Görmək üçün klikləyin" ' +
-        'onclick="togglePass(this)" data-plain="' + safePass + '" data-masked="••••••">••••••</span></td>' +
+        'onclick="togglePass(this)" data-plain="' + safePass + '" data-showing="0">••••••</span></td>' +
       '<td class="user-date-cell">' + date + '</td>' +
-      '<td><button class="btn-delete" onclick="deleteUser(' + Number(u.id) + ',this)">' +
+      '<td><button class="btn-delete" onclick="deleteUser(' + userId + ',this)">' +
         '<i class="fas fa-trash-alt"></i> Sil</button></td>';
 
     tbody.appendChild(tr);
@@ -692,7 +750,7 @@ function renderUsers(users) {
 
 function togglePass(el) {
   if (el.dataset.showing === '1') {
-    el.textContent = el.dataset.masked || '••••••';
+    el.textContent = '••••••';
     el.dataset.showing = '0';
   } else {
     el.textContent = el.dataset.plain || '';
@@ -719,7 +777,10 @@ function deleteUser(id, btn) {
       } else {
         return r.text().then(function(txt) {
           var errMsg = 'Silmə xətası (status: ' + r.status + ')';
-          try { var p = JSON.parse(txt); if (p.message) errMsg = p.message; } catch(e) {}
+          try {
+            var parsed = JSON.parse(txt);
+            if (parsed.message) errMsg = parsed.message;
+          } catch(ex) {}
           throw new Error(errMsg);
         });
       }
@@ -736,8 +797,8 @@ function deleteUser(id, btn) {
    VIP İSTİFADƏÇİ ƏLAVƏ ET
    ============================================================ */
 function addUser() {
-  var username = document.getElementById('new-username').value.trim();
-  var password = document.getElementById('new-password').value.trim();
+  var username  = document.getElementById('new-username').value.trim();
+  var password  = document.getElementById('new-password').value.trim();
   var successEl = document.getElementById('add-success');
   var errorEl   = document.getElementById('add-error');
   var errorTxt  = document.getElementById('add-error-text');
@@ -763,7 +824,7 @@ function addUser() {
       btn.classList.remove('loading');
       btn.disabled = false;
 
-      if (r.ok || r.status === 201 || r.status === 200 || r.status === 204) {
+      if (r.status === 200 || r.status === 201 || r.status === 204) {
         document.getElementById('new-username').value = '';
         document.getElementById('new-password').value = '';
         successEl.classList.add('show');
@@ -777,7 +838,7 @@ function addUser() {
             var parsed = JSON.parse(txt);
             if (parsed.message) errMsg = parsed.message;
             if (parsed.details) errMsg += ' – ' + parsed.details;
-          } catch(e) {}
+          } catch(ex) {}
           throw new Error(errMsg);
         });
       }
@@ -786,10 +847,9 @@ function addUser() {
       btn.classList.remove('loading');
       btn.disabled = false;
       var errMsg = err.message || 'Xəta baş verdi.';
-      if (errMsg.toLowerCase().indexOf('unique') !== -1 ||
-          errMsg.toLowerCase().indexOf('duplicate') !== -1 ||
-          errMsg.toLowerCase().indexOf('already exists') !== -1) {
-        errMsg = 'Bu istifadəçi adı artıq mövcuddur.';
+      /* Dublikat istifadəçi */
+      if (/unique|duplicate|already exist/i.test(errMsg)) {
+        errMsg = 'Bu istifadəçi adı artıq mövcuddur. Başqa ad seçin.';
       }
       errorTxt.textContent = errMsg;
       errorEl.classList.add('show');
@@ -811,20 +871,17 @@ function escHtml(str) {
 }
 
 /* ============================================================
-   ENTER DÜYMƏSI – GİRİŞ FORMU
-   ============================================================ */
-document.getElementById('admin-login-form').addEventListener('submit', function(e) {
-  handleAdminLogin(e);
-});
-
-/* ============================================================
    SESSIYA YOXLAMA – Səhifə Yüklənəndə
    ============================================================ */
 (function initAdmin() {
-  if (sessionStorage.getItem('rm_admin') === '1') {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('admin-panel').classList.add('show');
-    loadAdminData();
+  try {
+    if (sessionStorage.getItem('rm_admin') === '1') {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-panel').classList.add('show');
+      loadAdminData();
+    }
+  } catch(e) {
+    /* sessionStorage mövcud deyil */
   }
 })();
 </script>

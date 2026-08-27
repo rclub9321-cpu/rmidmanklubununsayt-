@@ -8,7 +8,11 @@
   <link rel="icon" type="image/png" href="images/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+  <link rel="preconnect" href="https://yyrcsgqvkqyezopzohxb.supabase.co" crossorigin />
+  <link rel="dns-prefetch" href="https://yyrcsgqvkqyezopzohxb.supabase.co" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" /></noscript>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" /></noscript>
   <style>
@@ -24,9 +28,8 @@
     a{text-decoration:none;color:inherit}
     button{cursor:pointer;border:none;background:none;font-family:inherit}
 
-    /* HEADER */
     .vip-header{
-      background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);
+      background:rgba(10,10,10,0.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
       border-bottom:1px solid rgba(150,200,10,0.2);
       padding:14px 20px;display:flex;align-items:center;justify-content:space-between;
       position:sticky;top:0;z-index:100;
@@ -43,10 +46,8 @@
     }
     .vip-back-btn:hover{background:var(--lime);color:var(--black)}
 
-    /* MAIN */
     main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
 
-    /* LOGIN CARD */
     .login-card{
       background:var(--dark2);border:1px solid rgba(150,200,10,0.25);
       border-radius:var(--radius);padding:40px 36px;width:100%;max-width:420px;
@@ -61,7 +62,6 @@
     .login-card-header h1{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.5rem;color:var(--white);margin-bottom:6px}
     .login-card-header p{color:var(--gray);font-size:0.88rem}
 
-    /* FORM */
     .form-group{margin-bottom:18px}
     .form-group label{display:block;font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.8rem;color:var(--gray-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
     .form-input{
@@ -91,7 +91,6 @@
     }
     .error-msg.show{display:flex}
 
-    /* WELCOME SCREEN */
     .welcome-screen{display:none;text-align:center}
     .welcome-screen.show{display:block}
     .welcome-icon{
@@ -121,7 +120,6 @@
     }
     .btn-logout:hover{background:rgba(227,10,23,0.25);transform:translateY(-1px)}
 
-    /* SPINNER */
     .spinner{
       width:18px;height:18px;border:2px solid rgba(0,0,0,0.3);
       border-top-color:var(--black);border-radius:50%;
@@ -131,7 +129,6 @@
     .btn-login.loading .btn-text{display:none}
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    /* VIP BADGE */
     .vip-badge{
       display:inline-flex;align-items:center;gap:6px;
       background:linear-gradient(135deg,#D4AF37,#F0D060);
@@ -139,6 +136,12 @@
       font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.78rem;
       letter-spacing:0.5px;margin-bottom:12px;
     }
+
+    .connecting-msg{
+      text-align:center;color:var(--gray);font-size:0.85rem;
+      padding:12px;display:none;
+    }
+    .connecting-msg.show{display:block}
 
     @media(max-width:480px){
       .login-card{padding:28px 20px}
@@ -149,11 +152,11 @@
 <body>
 
 <header class="vip-header">
-  <a href="/" class="vip-logo">
+  <a href="index.html" class="vip-logo">
     <img src="images/logo.png" alt="RM İdman Klubu" />
     <span class="vip-logo-text">RM İDMAN KLUBU</span>
   </a>
-  <a href="/" class="vip-back-btn">
+  <a href="index.html" class="vip-back-btn">
     <i class="fas fa-arrow-left"></i> Ana Səhifə
   </a>
 </header>
@@ -186,6 +189,10 @@
         <div class="spinner"></div>
       </button>
     </form>
+    <div class="connecting-msg" id="connecting-msg">
+      <i class="fas fa-circle-notch fa-spin" style="margin-right:6px;color:var(--lime)"></i>
+      Supabase-ə qoşulunur...
+    </div>
   </div>
 
   <!-- WELCOME SCREEN -->
@@ -210,54 +217,72 @@
 'use strict';
 
 var SUPABASE_URL = 'https://yyrcsgqvkqyezopzohxb.supabase.co';
+var SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5cmNzcWd2a3F5ZXpvcHpvaHhiIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4Nzg0Mzg0NSwiZXhwIjoyMTAzNDE5ODQ1fQ.KXszL2Oap9DbyBsKYJF9CtmanJMFJ2yCclJGjFA0yaA';
 var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5cmNzcWd2a3F5ZXpvcHpvaHhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4NDM4NDUsImV4cCI6MjEwMzQxOTg0NX0.Jy1LFYWSeNWx6tEf1Oxw88_n1xvb76DxnVpwKvpkCZo';
 
-/* ---- Supabase fetch helper ---- */
-function sbFetch(path, opts) {
-  var url = SUPABASE_URL + path;
-  var headers = Object.assign({
-    'apikey': SUPABASE_ANON_KEY,
-    'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-    'Content-Type': 'application/json'
-  }, opts && opts.headers || {});
-  return fetch(url, Object.assign({}, opts, { headers: headers }));
+function sbFetch(path, opts, useService) {
+  var key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_ANON_KEY;
+  var baseHeaders = {
+    'apikey': key,
+    'Authorization': 'Bearer ' + key,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  };
+  var extraHeaders = (opts && opts.headers) ? opts.headers : {};
+  var mergedHeaders = Object.assign({}, baseHeaders, extraHeaders);
+  var fetchOpts = Object.assign({}, opts || {});
+  fetchOpts.headers = mergedHeaders;
+  return fetch(SUPABASE_URL + path, fetchOpts);
 }
 
-/* ---- Session helpers ---- */
 function saveSession(username) {
-  sessionStorage.setItem('vip_user', username);
+  try { sessionStorage.setItem('vip_user', username); } catch(e) {}
 }
 function clearSession() {
-  sessionStorage.removeItem('vip_user');
+  try { sessionStorage.removeItem('vip_user'); } catch(e) {}
 }
 function getSession() {
-  return sessionStorage.getItem('vip_user');
+  try { return sessionStorage.getItem('vip_user'); } catch(e) { return null; }
 }
 
-/* ---- Show / hide sections ---- */
 function showLoginSection() {
   document.getElementById('login-section').style.display = '';
   document.getElementById('welcome-section').classList.remove('show');
 }
+
 function showWelcomeSection(username, message) {
   document.getElementById('login-section').style.display = 'none';
   document.getElementById('welcome-username').textContent = username;
-  document.getElementById('welcome-message-display').textContent = message || 'Salam';
-  document.getElementById('welcome-full-message').textContent = message || 'Salam';
+  var msg = message || 'RM İdman Klubuna xoş gəldiniz!';
+  document.getElementById('welcome-message-display').textContent = msg;
+  document.getElementById('welcome-full-message').textContent = msg;
   document.getElementById('welcome-section').classList.add('show');
 }
 
-/* ---- Show error ---- */
 function showError(msg) {
   var el = document.getElementById('error-msg');
   document.getElementById('error-text').textContent = msg;
   el.classList.add('show');
 }
+
 function hideError() {
   document.getElementById('error-msg').classList.remove('show');
 }
 
-/* ---- Login handler ---- */
+function setLoading(isLoading) {
+  var btn = document.getElementById('login-btn');
+  var conn = document.getElementById('connecting-msg');
+  if (isLoading) {
+    btn.classList.add('loading');
+    btn.disabled = true;
+    conn.classList.add('show');
+  } else {
+    btn.classList.remove('loading');
+    btn.disabled = false;
+    conn.classList.remove('show');
+  }
+}
+
 function handleLogin(e) {
   e.preventDefault();
   hideError();
@@ -270,34 +295,40 @@ function handleLogin(e) {
     return;
   }
 
-  var btn = document.getElementById('login-btn');
-  btn.classList.add('loading');
-  btn.disabled = true;
+  setLoading(true);
 
-  /* Check user in Supabase */
-  sbFetch('/rest/v1/vip_users?select=username,password&username=eq.' + encodeURIComponent(username))
-    .then(function(r) { return r.json(); })
+  sbFetch('/rest/v1/vip_users?select=id,username,password&username=eq.' + encodeURIComponent(username), {
+    method: 'GET'
+  }, true)
+    .then(function(r) {
+      if (!r.ok) { throw new Error('Supabase cavab xətası: ' + r.status); }
+      return r.json();
+    })
     .then(function(data) {
-      btn.classList.remove('loading');
-      btn.disabled = false;
-
-      if (!data || !Array.isArray(data) || data.length === 0) {
-        showError('İstifadəçi adı tapılmadı.');
+      if (!Array.isArray(data) || data.length === 0) {
+        setLoading(false);
+        showError('İstifadəçi adı tapılmadı. Zəhmət olmasa yenidən yoxlayın.');
         return;
       }
 
       var user = data[0];
-      if (user.password !== password) {
-        showError('Parol yanlışdır.');
+      if (String(user.password) !== String(password)) {
+        setLoading(false);
+        showError('Parol yanlışdır. Zəhmət olmasa yenidən cəhd edin.');
         return;
       }
 
-      /* Fetch welcome message */
-      return sbFetch('/rest/v1/admin_settings?select=value&key=eq.welcome_message')
-        .then(function(r) { return r.json(); })
+      return sbFetch('/rest/v1/admin_settings?select=value&key=eq.welcome_message', {
+        method: 'GET'
+      }, false)
+        .then(function(r) {
+          if (!r.ok) { throw new Error('Settings xətası: ' + r.status); }
+          return r.json();
+        })
         .then(function(settings) {
-          var msg = 'Salam';
-          if (settings && settings.length > 0) {
+          setLoading(false);
+          var msg = 'RM İdman Klubuna xoş gəldiniz!';
+          if (settings && Array.isArray(settings) && settings.length > 0 && settings[0].value) {
             msg = settings[0].value;
           }
           saveSession(username);
@@ -305,39 +336,42 @@ function handleLogin(e) {
         });
     })
     .catch(function(err) {
-      btn.classList.remove('loading');
-      btn.disabled = false;
-      showError('Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.');
-      console.error(err);
+      setLoading(false);
+      console.error('VIP login xətası:', err);
+      showError('Xəta baş verdi: ' + (err.message || 'Bağlantı problemi. Yenidən cəhd edin.'));
     });
 }
 
-/* ---- Logout ---- */
 function handleLogout() {
   clearSession();
   showLoginSection();
   document.getElementById('username').value = '';
   document.getElementById('password').value = '';
+  hideError();
 }
 
-/* ---- Init: check existing session ---- */
 (function init() {
   var existing = getSession();
-  if (existing) {
-    /* Refresh welcome message */
-    sbFetch('/rest/v1/admin_settings?select=value&key=eq.welcome_message')
-      .then(function(r) { return r.json(); })
-      .then(function(settings) {
-        var msg = 'Salam';
-        if (settings && settings.length > 0) {
-          msg = settings[0].value;
-        }
-        showWelcomeSection(existing, msg);
-      })
-      .catch(function() {
-        showWelcomeSection(existing, 'Salam');
-      });
-  }
+  if (!existing) return;
+
+  sbFetch('/rest/v1/admin_settings?select=value&key=eq.welcome_message', {
+    method: 'GET'
+  }, false)
+    .then(function(r) {
+      if (!r.ok) { throw new Error('status ' + r.status); }
+      return r.json();
+    })
+    .then(function(settings) {
+      var msg = 'RM İdman Klubuna xoş gəldiniz!';
+      if (settings && Array.isArray(settings) && settings.length > 0 && settings[0].value) {
+        msg = settings[0].value;
+      }
+      showWelcomeSection(existing, msg);
+    })
+    .catch(function(err) {
+      console.warn('Session yenilənmədi:', err);
+      showWelcomeSection(existing, 'RM İdman Klubuna xoş gəldiniz!');
+    });
 })();
 </script>
 </body>
