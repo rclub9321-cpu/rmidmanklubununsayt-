@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Admin Panel – RM İDMAN KLUBU</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="../images/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" /></noscript>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" /></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #D4AF37;
+      --lime: #96C80A;
+      --lime-light: #AADB1E;
+      --black: #0A0A0A;
+      --dark: #111111;
+      --dark2: #1A1A1A;
+      --dark3: #222222;
+      --gray: #888888;
+      --gray-light: #CCCCCC;
+      --white: #FFFFFF;
+      --red: #E30A17;
+      --radius: 16px;
+      --radius-sm: 8px;
+      --transition: 0.22s ease;
+    }
+    html { font-size: 16px; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--dark);
+      color: var(--white);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* ===== HEADER ===== */
+    .admin-header {
+      background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 2px solid rgba(212,175,55,0.4);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .admin-logo { display: flex; align-items: center; gap: 12px; }
+    .admin-logo img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
+    .admin-logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1rem;
+      color: var(--gold);
+    }
+    .admin-logo-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      color: var(--gray);
+      margin-top: 2px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .admin-badge {
+      background: linear-gradient(135deg, var(--gold), #F0D060);
+      color: var(--black);
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+    }
+    .btn-logout-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(227,10,23,0.12);
+      border: 1px solid rgba(227,10,23,0.3);
+      color: #ff6b6b;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      transition: all var(--transition);
+    }
+    .btn-logout-header:hover { background: rgba(227,10,23,0.25); }
+    .btn-back-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(150,200,10,0.1);
+      border: 1px solid rgba(150,200,10,0.3);
+      color: var(--lime);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      transition: all var(--transition);
+    }
+    .btn-back-header:hover { background: var(--lime); color: var(--black); }
+
+    /* ===== LAYOUT ===== */
+    .admin-wrap {
+      display: flex;
+      min-height: calc(100vh - 70px);
+    }
+
+    /* ===== LOGIN ===== */
+    #login-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 70px);
+      padding: 40px 20px;
+      width: 100%;
+    }
+    .login-card {
+      background: var(--dark2);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: var(--radius);
+      padding: 44px 40px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .login-header { text-align: center; margin-bottom: 34px; }
+    .login-icon {
+      width: 72px; height: 72px;
+      background: rgba(212,175,55,0.12);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.9rem; color: var(--gold);
+      margin: 0 auto 16px;
+    }
+    .login-header h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1.55rem;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .login-header p { color: var(--gray); font-size: 0.88rem; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      color: var(--gray-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 13px 16px;
+      background: var(--dark3);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: var(--radius-sm);
+      color: var(--white);
+      font-size: 0.95rem;
+      font-family: 'Open Sans', sans-serif;
+      transition: border-color var(--transition);
+      outline: none;
+    }
+    .form-input:focus { border-color: var(--gold); }
+    .form-input::placeholder { color: var(--gray); }
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--gold), #F0D060);
+      color: var(--black);
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      transition: all var(--transition);
+      margin-top: 6px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,175,55,0.4); }
+    .error-msg {
+      background: rgba(227,10,23,0.12);
+      border: 1px solid rgba(227,10,23,0.3);
+      color: #ff6b6b;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+    .error-msg.show { display: flex; }
+
+    /* ===== ADMIN PANEL ===== */
+    #admin-panel { display: none; width: 100%; }
+    #admin-panel.show { display: flex; }
+    .admin-sidebar {
+      width: 240px;
+      min-width: 240px;
+      background: var(--dark2);
+      border-right: 1px solid rgba(212,175,55,0.15);
+      padding: 24px 0;
+      min-height: calc(100vh - 70px);
+    }
+    .sidebar-menu { list-style: none; }
+    .sidebar-item a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 24px;
+      color: var(--gray-light);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: all var(--transition);
+      border-left: 3px solid transparent;
+    }
+    .sidebar-item a:hover, .sidebar-item a.active {
+      background: rgba(212,175,55,0.08);
+      color: var(--gold);
+      border-left-color: var(--gold);
+    }
+    .sidebar-item a i { width: 18px; text-align: center; }
+
+    .admin-content { flex: 1; padding: 32px 36px; overflow-y: auto; }
+    .admin-tab { display: none; }
+    .admin-tab.active { display: block; }
+
+    /* ===== PAGE TITLES ===== */
+    .page-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1.6rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .page-subtitle { color: var(--gray); font-size: 0.88rem; margin-bottom: 28px; }
+
+    /* ===== CARDS ===== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: var(--dark2);
+      border: 1px solid rgba(212,175,55,0.15);
+      border-radius: var(--radius-sm);
+      padding: 22px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .stat-card-icon {
+      width: 44px; height: 44px;
+      background: rgba(212,175,55,0.1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .stat-card-value {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1.8rem;
+      color: var(--white);
+    }
+    .stat-card-label { color: var(--gray); font-size: 0.82rem; }
+
+    /* ===== TABLE ===== */
+    .table-wrap {
+      background: var(--dark2);
+      border: 1px solid rgba(212,175,55,0.15);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .table-header {
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(212,175,55,0.12);
+    }
+    .table-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--white);
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      background: var(--dark3);
+      padding: 12px 16px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      text-align: left;
+    }
+    tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); transition: background var(--transition); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(212,175,55,0.04); }
+    td { padding: 13px 16px; font-size: 0.88rem; color: var(--gray-light); }
+    td strong { color: var(--white); }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+    }
+    .badge-green { background: rgba(150,200,10,0.15); color: var(--lime); border: 1px solid rgba(150,200,10,0.3); }
+    .badge-gray { background: rgba(136,136,136,0.15); color: var(--gray); border: 1px solid rgba(136,136,136,0.2); }
+    .action-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      cursor: pointer;
+      border: none;
+      transition: all var(--transition);
+    }
+    .btn-danger { background: rgba(227,10,23,0.15); color: #ff6b6b; border: 1px solid rgba(227,10,23,0.3); }
+    .btn-danger:hover { background: rgba(227,10,23,0.3); }
+
+    /* ===== FORM PANEL ===== */
+    .form-panel {
+      background: var(--dark2);
+      border: 1px solid rgba(212,175,55,0.15);
+      border-radius: var(--radius-sm);
+      padding: 28px 28px;
+      margin-bottom: 24px;
+    }
+    .form-panel-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-panel-title i { color: var(--gold); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .form-group-admin { display: flex; flex-direction: column; gap: 6px; }
+    .form-group-admin label {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      color: var(--gray-light);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .form-input-admin {
+      padding: 11px 14px;
+      background: var(--dark3);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: var(--radius-sm);
+      color: var(--white);
+      font-size: 0.9rem;
+      font-family: 'Open Sans', sans-serif;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .form-input-admin:focus { border-color: var(--gold); }
+    .form-input-admin::placeholder { color: var(--gray); }
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--gold), #F0D060);
+      color: var(--black);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      border: none;
+      transition: all var(--transition);
+      margin-top: 16px;
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,175,55,0.35); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* ===== SUCCESS / ERROR TOAST ===== */
+    .toast {
+      position: fixed;
+      top: 80px;
+      right: 24px;
+      z-index: 9999;
+      padding: 14px 20px;
+      border-radius: var(--radius-sm);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+      min-width: 260px;
+      max-width: 360px;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast-success { background: rgba(150,200,10,0.15); border: 1px solid rgba(150,200,10,0.4); color: var(--lime); }
+    .toast-error { background: rgba(227,10,23,0.15); border: 1px solid rgba(227,10,23,0.3); color: #ff6b6b; }
+
+    /* ===== LOADING ===== */
+    .loading-row td { text-align: center; padding: 28px; color: var(--gray); }
+    .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(212,175,55,0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--gray); }
+    .empty-state i { font-size: 2.5rem; margin-bottom: 12px; color: rgba(212,175,55,0.3); }
+    .empty-state p { font-size: 0.9rem; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .admin-sidebar { display: none; }
+      .admin-content { padding: 20px 16px; }
+      .form-row, .form-row-3 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .login-card { padding: 28px 20px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .admin-header { padding: 12px 16px; }
+      .admin-logo-sub { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="admin-header">
+  <div class="admin-logo">
+    <img src="../images/logo.png" alt="RM İdman Klubu" />
+    <div>
+      <div class="admin-logo-text">RM İDMAN KLUBU</div>
+      <div class="admin-logo-sub">Admin Panel</div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <a href="../index.html" class="btn-back-header">
+      <i class="fas fa-arrow-left"></i> Sayta Qayıt
+    </a>
+    <span id="admin-badge-wrap" style="display:none">
+      <span class="admin-badge"><i class="fas fa-shield-alt"></i> Admin</span>
+    </span>
+    <button id="btn-logout-header" onclick="adminLogout()" style="display:none" class="btn-logout-header">
+      <i class="fas fa-sign-out-alt"></i> Çıxış
+    </button>
+  </div>
+</header>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-icon"><i class="fas fa-shield-alt"></i></div>
+      <h1>Admin Paneli</h1>
+      <p>Daxil olmaq üçün admin məlumatlarınızı daxil edin</p>
+    </div>
+    <div class="error-msg" id="login-error">
+      <i class="fas fa-exclamation-circle"></i>
+      <span id="login-error-text">Ad və ya şifrə yanlışdır.</span>
+    </div>
+    <form id="login-form" onsubmit="doLogin(event)">
+      <div class="form-group">
+        <label for="admin-user">İstifadəçi Adı</label>
+        <input type="text" id="admin-user" class="form-input" placeholder="Admin adını daxil edin" required autocomplete="username" />
+      </div>
+      <div class="form-group">
+        <label for="admin-pass">Şifrə</label>
+        <input type="password" id="admin-pass" class="form-input" placeholder="Şifrənizi daxil edin" required autocomplete="current-password" />
+      </div>
+      <button type="submit" class="btn-login">
+        <i class="fas fa-sign-in-alt"></i> Daxil Ol
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel" class="admin-wrap">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <ul class="sidebar-menu">
+      <li class="sidebar-item">
+        <a href="#" class="active" data-tab="dashboard" onclick="switchTab('dashboard');return false;">
+          <i class="fas fa-tachometer-alt"></i> İdarəetmə Paneli
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a href="#" data-tab="users" onclick="switchTab('users');return false;">
+          <i class="fas fa-crown"></i> VIP İstifadəçilər
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a href="#" data-tab="orders" onclick="switchTab('orders');return false;">
+          <i class="fas fa-list-alt"></i> Sifarişlər (Supabase)
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Content -->
+  <main class="admin-content">
+
+    <!-- === TAB: DASHBOARD === -->
+    <div class="admin-tab active" id="tab-dashboard">
+      <h1 class="page-title">İdarəetmə Paneli</h1>
+      <p class="page-subtitle">RM İdman Klubu admin idarəetmə mərkəzinə xoş gəldiniz</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-icon"><i class="fas fa-crown"></i></div>
+          <div class="stat-card-value" id="stat-vip-count">—</div>
+          <div class="stat-card-label">VIP İstifadəçi</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon"><i class="fas fa-list-alt"></i></div>
+          <div class="stat-card-value" id="stat-orders-count">—</div>
+          <div class="stat-card-label">Supabase Sifariş</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon"><i class="fas fa-check-circle"></i></div>
+          <div class="stat-card-value">Aktiv</div>
+          <div class="stat-card-label">Sayt Statusu</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <div class="table-header">
+          <span class="table-title"><i class="fas fa-info-circle" style="color:var(--gold);margin-right:6px"></i>Sistem Məlumatları</span>
+        </div>
+        <table>
+          <tbody>
+            <tr><td>Sayt</td><td><strong>RM İDMAN KLUBU</strong></td></tr>
+            <tr><td>Supabase URL</td><td><strong>urtgekafeknuhanxluph.supabase.co</strong></td></tr>
+            <tr><td>VIP JSON</td><td><strong>../vip_users.json</strong></td></tr>
+            <tr><td>Admin Giriş</td><td><span class="badge badge-green">Aktiv</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- === TAB: VIP USERS === -->
+    <div class="admin-tab" id="tab-users">
+      <h1 class="page-title">VIP İstifadəçilər</h1>
+      <p class="page-subtitle">VIP üzv məlumatlarını idarə edin. Yeni üzv əlavə edin – Supabase-ə avtomatik yazılır və dərhal aktiv olur.</p>
+
+      <!-- Add User Form -->
+      <div class="form-panel">
+        <div class="form-panel-title"><i class="fas fa-user-plus"></i> Yeni VIP İstifadəçi Əlavə Et</div>
+        <form id="add-user-form" onsubmit="addVipUser(event)">
+          <div class="form-row">
+            <div class="form-group-admin">
+              <label>İstifadəçi Adı <span style="color:var(--red)">*</span></label>
+              <input type="text" id="new-username" class="form-input-admin" placeholder="İstifadəçi adı daxil edin" required />
+            </div>
+            <div class="form-group-admin">
+              <label>Şifrə (Kod) <span style="color:var(--red)">*</span></label>
+              <input type="text" id="new-password" class="form-input-admin" placeholder="Şifrə daxil edin" required />
+            </div>
+          </div>
+          <div class="form-group-admin" style="margin-top:14px">
+            <label>VIP Mesaj</label>
+            <textarea id="new-message" class="form-input-admin form-textarea" placeholder="VIP üzv üçün xüsusi mesaj yazın..."></textarea>
+          </div>
+          <button type="submit" class="btn-submit" id="add-user-btn">
+            <i class="fas fa-plus"></i> Əlavə Et
+          </button>
+        </form>
+      </div>
+
+      <!-- Users Table -->
+      <div class="table-wrap">
+        <div class="table-header">
+          <span class="table-title"><i class="fas fa-users" style="color:var(--gold);margin-right:6px"></i>Mövcud VIP İstifadəçilər</span>
+          <button onclick="loadVipUsers()" style="background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.3);color:var(--gold);padding:6px 14px;border-radius:6px;font-size:0.78rem;font-family:Montserrat,sans-serif;font-weight:700;cursor:pointer;transition:all 0.2s">
+            <i class="fas fa-sync-alt"></i> Yenilə
+          </button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>İstifadəçi Adı</th>
+              <th>Şifrə</th>
+              <th>Mesaj</th>
+              <th>Mənbə</th>
+              <th>Əməliyyat</th>
+            </tr>
+          </thead>
+          <tbody id="users-table-body">
+            <tr class="loading-row"><td colspan="6"><span class="spinner"></span> Yüklənir...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- === TAB: ORDERS (SUPABASE) === -->
+    <div class="admin-tab" id="tab-orders">
+      <h1 class="page-title">Sifarişlər (Supabase)</h1>
+      <p class="page-subtitle">Supabase "orders" cədvəlindən real-vaxtda məlumatlar.</p>
+
+      <div class="table-wrap">
+        <div class="table-header">
+          <span class="table-title"><i class="fas fa-database" style="color:var(--gold);margin-right:6px"></i>Bütün Sifarişlər</span>
+          <button onclick="loadOrders()" style="background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.3);color:var(--gold);padding:6px 14px;border-radius:6px;font-size:0.78rem;font-family:Montserrat,sans-serif;font-weight:700;cursor:pointer;transition:all 0.2s">
+            <i class="fas fa-sync-alt"></i> Yenilə
+          </button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>İstifadəçi Adı</th>
+              <th>Mesaj</th>
+              <th>Tarix</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="orders-table-body">
+            <tr class="loading-row"><td colspan="5"><span class="spinner"></span> Yüklənir...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+'use strict';
+
+/* ============================================================
+   SUPABASE CONFIG – Yalnız Anon Key
+   ============================================================ */
+var SUPABASE_URL = 'https://urtgekafeknuhanxluph.supabase.co';
+var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVydGdla2FmZWtudWhhbnhsdXBoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxODQxNDAsImV4cCI6MjEwNTc2MDE0MH0.31d-jkSzvLqjMtVoTBmxHbO_BkYqUo8IKgjqogcijyI';
+var VIP_USERS_URL = '../vip_users.json';
+
+/* ============================================================
+   ADMIN AUTH — admin12 / 4321
+   ============================================================ */
+var ADMIN_CREDS = { username: 'admin12', password: '4321' };
+
+function doLogin(e) {
+  e.preventDefault();
+  var user = document.getElementById('admin-user').value.trim();
+  var pass = document.getElementById('admin-pass').value.trim();
+  var errEl = document.getElementById('login-error');
+  errEl.classList.remove('show');
+
+  if (user === ADMIN_CREDS.username && pass === ADMIN_CREDS.password) {
+    try { sessionStorage.setItem('rm_admin', '1'); } catch(ex) {}
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-panel').classList.add('show');
+    document.getElementById('admin-badge-wrap').style.display = '';
+    document.getElementById('btn-logout-header').style.display = '';
+    initAdminPanel();
+  } else {
+    document.getElementById('login-error-text').textContent = 'Ad və ya şifrə yanlışdır.';
+    errEl.classList.add('show');
+  }
+}
+
+function adminLogout() {
+  try { sessionStorage.removeItem('rm_admin'); } catch(ex) {}
+  document.getElementById('login-screen').style.display = '';
+  document.getElementById('admin-panel').classList.remove('show');
+  document.getElementById('admin-badge-wrap').style.display = 'none';
+  document.getElementById('btn-logout-header').style.display = 'none';
+  document.getElementById('admin-user').value = '';
+  document.getElementById('admin-pass').value = '';
+}
+
+/* Auto-restore session */
+(function() {
+  try {
+    if (sessionStorage.getItem('rm_admin') === '1') {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-panel').classList.add('show');
+      document.getElementById('admin-badge-wrap').style.display = '';
+      document.getElementById('btn-logout-header').style.display = '';
+      initAdminPanel();
+    }
+  } catch(ex) {}
+})();
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function initAdminPanel() {
+  loadVipUsers();
+  loadOrders();
+}
+
+/* ============================================================
+   TAB SWITCHING
+   ============================================================ */
+function switchTab(tabName) {
+  var tabs = document.querySelectorAll('.admin-tab');
+  for (var i = 0; i < tabs.length; i++) { tabs[i].classList.remove('active'); }
+  var sideItems = document.querySelectorAll('.sidebar-item a');
+  for (var j = 0; j < sideItems.length; j++) {
+    sideItems[j].classList.remove('active');
+    if (sideItems[j].getAttribute('data-tab') === tabName) {
+      sideItems[j].classList.add('active');
+    }
+  }
+  var target = document.getElementById('tab-' + tabName);
+  if (target) target.classList.add('active');
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+var _toastTimer = null;
+function showToast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = '';
+  t.className = 'toast toast-' + (type || 'success');
+  var icon = document.createElement('i');
+  icon.className = type === 'error' ? 'fas fa-exclamation-circle' : 'fas fa-check-circle';
+  t.appendChild(icon);
+  t.appendChild(document.createTextNode(' ' + msg));
+  t.classList.add('show');
+  if (_toastTimer) clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(function() { t.classList.remove('show'); }, 3500);
+}
+
+/* ============================================================
+   SUPABASE HELPERS
+   ============================================================ */
+function sbFetch(path, options) {
+  var url = SUPABASE_URL + '/rest/v1/' + path;
+  var headers = {
+    'apikey': SUPABASE_ANON_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=representation'
+  };
+  return fetch(url, Object.assign({ headers: headers }, options || {}));
+}
+
+/* ============================================================
+   VIP USERS — Load from JSON + Supabase
+   ============================================================ */
+var localVipUsers = []; // from JSON file
+var supabaseVipUsers = []; // from supabase
+
+function loadVipUsers() {
+  var tbody = document.getElementById('users-table-body');
+  tbody.innerHTML = '<tr class="loading-row"><td colspan="6"><span class="spinner"></span> Yüklənir...</td></tr>';
+
+  // Load from vip_users.json
+  var jsonPromise = fetch(VIP_USERS_URL + '?_=' + Date.now())
+    .then(function(r) { return r.json(); })
+    .catch(function() { return []; });
+
+  // Load from Supabase vip_users table
+  var sbPromise = sbFetch('vip_users?select=*&order=created_at.desc')
+    .then(function(r) {
+      if (!r.ok) return [];
+      return r.json();
+    })
+    .catch(function() { return []; });
+
+  Promise.all([jsonPromise, sbPromise]).then(function(results) {
+    localVipUsers = results[0] || [];
+    supabaseVipUsers = results[1] || [];
+    renderUsersTable();
+    document.getElementById('stat-vip-count').textContent = localVipUsers.length + supabaseVipUsers.length;
+  });
+}
+
+function renderUsersTable() {
+  var tbody = document.getElementById('users-table-body');
+  tbody.innerHTML = '';
+  var idx = 1;
+
+  // Supabase users first
+  if (supabaseVipUsers.length > 0) {
+    supabaseVipUsers.forEach(function(u) {
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td>' + idx++ + '</td>' +
+        '<td><strong>' + escHtml(u.username || '') + '</strong></td>' +
+        '<td>' + escHtml(u.password || '') + '</td>' +
+        '<td>' + escHtml(u.message || '') + '</td>' +
+        '<td><span class="badge badge-green"><i class="fas fa-database" style="margin-right:4px"></i>Supabase</span></td>' +
+        '<td><button class="action-btn btn-danger" onclick="deleteSupabaseUser(' + u.id + ')"><i class="fas fa-trash"></i> Sil</button></td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  // JSON users
+  if (localVipUsers.length > 0) {
+    localVipUsers.forEach(function(u, i) {
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td>' + idx++ + '</td>' +
+        '<td><strong>' + escHtml(u.username || '') + '</strong></td>' +
+        '<td>' + escHtml(u.password || '') + '</td>' +
+        '<td>' + escHtml(u.message || '') + '</td>' +
+        '<td><span class="badge badge-gray"><i class="fas fa-file-code" style="margin-right:4px"></i>JSON</span></td>' +
+        '<td><span style="color:var(--gray);font-size:0.78rem">JSON faylı</span></td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  if (idx === 1) {
+    tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fas fa-users"></i><p>Heç bir VIP istifadəçi tapılmadı</p></div></td></tr>';
+  }
+}
+
+/* ============================================================
+   ADD VIP USER — Supabase-ə yaz + dərhal aktiv et
+   ============================================================ */
+function addVipUser(e) {
+  e.preventDefault();
+  var username = document.getElementById('new-username').value.trim();
+  var password = document.getElementById('new-password').value.trim();
+  var message = document.getElementById('new-message').value.trim();
+
+  if (!username || !password) {
+    showToast('İstifadəçi adı və şifrə tələb olunur!', 'error');
+    return;
+  }
+
+  var btn = document.getElementById('add-user-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Əlavə edilir...';
+
+  // 1. Supabase-ə yaz
+  sbFetch('vip_users', {
+    method: 'POST',
+    body: JSON.stringify({ username: username, password: password, message: message || 'Xoş gəldiniz!' })
+  })
+  .then(function(r) {
+    if (!r.ok) {
+      return r.text().then(function(t) { throw new Error(t || 'Supabase xətası'); });
+    }
+    return r.json();
+  })
+  .then(function(data) {
+    showToast('"' + username + '" uğurla əlavə edildi! Dərhal aktiv oldu.', 'success');
+    document.getElementById('add-user-form').reset();
+    loadVipUsers(); // Yenilə
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-plus"></i> Əlavə Et';
+  })
+  .catch(function(err) {
+    showToast('Xəta: ' + err.message, 'error');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-plus"></i> Əlavə Et';
+  });
+}
+
+/* ============================================================
+   DELETE SUPABASE USER
+   ============================================================ */
+function deleteSupabaseUser(id) {
+  if (!confirm('Bu istifadəçini silmək istəyirsiniz?')) return;
+  sbFetch('vip_users?id=eq.' + id, { method: 'DELETE' })
+    .then(function() {
+      showToast('İstifadəçi silindi.', 'success');
+      loadVipUsers();
+    })
+    .catch(function() {
+      showToast('Silmə zamanı xəta baş verdi.', 'error');
+    });
+}
+
+/* ============================================================
+   ORDERS — Supabase-dən yüklə
+   ============================================================ */
+function loadOrders() {
+  var tbody = document.getElementById('orders-table-body');
+  tbody.innerHTML = '<tr class="loading-row"><td colspan="5"><span class="spinner"></span> Yüklənir...</td></tr>';
+
+  sbFetch('orders?select=*&order=created_at.desc')
+    .then(function(r) {
+      if (!r.ok) throw new Error('Supabase sorğusu uğursuz oldu');
+      return r.json();
+    })
+    .then(function(data) {
+      document.getElementById('stat-orders-count').textContent = data.length;
+      renderOrdersTable(data);
+    })
+    .catch(function(err) {
+      tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Sifarişlər yüklənə bilmədi.<br><small>' + err.message + '</small></p></div></td></tr>';
+    });
+}
+
+function renderOrdersTable(data) {
+  var tbody = document.getElementById('orders-table-body');
+  tbody.innerHTML = '';
+
+  if (!data || data.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><i class="fas fa-inbox"></i><p>Hələ heç bir sifariş yoxdur</p></div></td></tr>';
+    return;
+  }
+
+  data.forEach(function(order) {
+    var tr = document.createElement('tr');
+    var date = order.created_at ? new Date(order.created_at).toLocaleString('az-AZ') : '—';
+    tr.innerHTML =
+      '<td><strong>#' + (order.id || '—') + '</strong></td>' +
+      '<td>' + escHtml(order.username || order.name || '—') + '</td>' +
+      '<td>' + escHtml(order.message || order.notes || '—') + '</td>' +
+      '<td>' + date + '</td>' +
+      '<td><span class="badge badge-green">Aktiv</span></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+/* ============================================================
+   HELPER
+   ============================================================ */
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
